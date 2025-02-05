@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\EngineZ\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\lookups\\lookups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\lookups\\lookups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Lookups.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\lookups\\Lookups.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\lookups\\Lookups.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\lookups\\Lookups.cs",
+              "RelativeToolTip": "EngineZ\\classes\\lookups\\Lookups.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:01:37.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DataStructures.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "RelativeToolTip": "EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:02:02.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Entity.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\Entity.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
+              "RelativeToolTip": "EngineZ\\classes\\entity\\Entity.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBEAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T23:54:09.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
+              "RelativeDocumentMoniker": "EngineZ\\Game1.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
+              "RelativeToolTip": "EngineZ\\Game1.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAwwEoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T22:01:31.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
+              "RelativeDocumentMoniker": "EngineZ\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
+              "RelativeToolTip": "EngineZ\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T22:01:25.539Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
