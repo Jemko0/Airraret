@@ -396,3 +396,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.vs/ProjectEvaluation/enginez.strings.v9.bin
+.vs/ProjectEvaluation/enginez.projects.v9.bin
+.vs/ProjectEvaluation/enginez.metadata.v9.bin
+.vs/EngineZ/v17/DocumentLayout.json
+.vs/EngineZ/v17/DocumentLayout.backup.json
+.vs/EngineZ/v17/.suo
+.vs/EngineZ/v17/.futdcache.v2
+.vs/EngineZ/DesignTimeBuild/.dtbcache.v2
