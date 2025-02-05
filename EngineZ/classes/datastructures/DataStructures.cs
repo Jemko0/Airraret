@@ -15,10 +15,26 @@ namespace EngineZ.DataStructures
         Player,
     }
 
+    public enum TileTypes
+    {
+        Air = 0,
+        Dirt = 1,
+        Stone = 2,
+    }
+
     public struct EntityDef
     {
         public EntityTypes type;
         public Vector2 dimensions;
         public Texture2D sprite;
+        public Color tint;
+    }
+
+    public struct Tile
+    {
+        public bool valid;
+        public bool collide;
+        public Texture2D sprite;
+        public Color tint;
     }
 }
