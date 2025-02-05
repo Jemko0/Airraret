@@ -7,7 +7,7 @@ namespace EngineZ.classes.world
     public class World
     {
         public static Dictionary<Vector2, TileTypes> tiles = new Dictionary<Vector2, TileTypes>();
-        public static int TILESIZE = 16;
+        public static int TILESIZE = 32;
         public void FillWorld(int size)
         {
             for(int x = 0; x < size; x++)
