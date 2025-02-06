@@ -25,7 +25,7 @@ namespace EngineZ
         private Camera clientCamera;
         private HUD clientHUD;
         private PlayerController LocalPlayerController;
-        public static SpriteFont gameFont;
+        public static SpriteFont gameFont28;
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -44,8 +44,6 @@ namespace EngineZ
             world.FillWorld(50);
 
             clientCamera = new Camera();
-
-            clientHUD = new HUD();
             base.Initialize();
 
         }
@@ -93,10 +91,10 @@ namespace EngineZ
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            gameFont28 = Content.Load<SpriteFont>("Fonts/Andy");
 
+            clientHUD = new HUD();
             clientHUD.InitHUD(ref _spriteBatch, ref _graphics);
-
-            gameFont = Content.Load<SpriteFont>("Fonts/Andy");
 
             Entity b = CreateEntity<Character>(EntityTypes.Player);
             b.SetLocation(50, -500);
@@ -199,7 +197,7 @@ namespace EngineZ
                 }
             }
 
-            _spriteBatch.DrawString(gameFont, "test", new Vector2(25, 25), Color.Black);
+            _spriteBatch.DrawString(gameFont28, "test", new Vector2(25, 25), Color.Black);
             _spriteBatch.End();
             
             clientHUD.DrawWidgets();

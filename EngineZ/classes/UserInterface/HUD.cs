@@ -1,4 +1,5 @@
 ﻿using EngineZ.classes.interfaces;
+using EngineZ.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,7 +14,9 @@ namespace EngineZ.UI
         private static List<Widget> activeWidgets = new List<Widget>();
         public HUD()
         {
-            CreateWidget<WButton>(this, new Rectangle(100, 100, 250, 96));
+            WButton b = CreateWidget<WButton>(this, new Rectangle(400, 100, 250, 100));
+            WTextBlock tb = CreateWidget<WTextBlock>(this, new Rectangle(0, 0, 100, 100), "Testtext", TextJustification.Right);
+            b.AddChild(tb);
         }
 
         public unsafe void InitHUD(ref SpriteBatch spriteBatch, ref GraphicsDeviceManager gdm)
@@ -41,6 +44,9 @@ namespace EngineZ.UI
             spriteBatch.Begin(SpriteSortMode.Immediate);
             foreach (Widget w in activeWidgets)
             {
+                if (w.suppressDraw)
+                    continue;
+
                 w.Draw(ref spriteBatch);
             }
             spriteBatch.End();

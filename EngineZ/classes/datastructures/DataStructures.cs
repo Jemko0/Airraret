@@ -37,4 +37,11 @@ namespace EngineZ.DataStructures
         public Texture2D sprite;
         public Color tint;
     }
+
+    public enum TextJustification
+    {
+        Left,
+        Center,
+        Right,
+    }
 }

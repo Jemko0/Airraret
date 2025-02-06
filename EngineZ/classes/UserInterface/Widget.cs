@@ -11,10 +11,38 @@ namespace EngineZ.UI
     {
         protected HUD ownerHUD;
         protected Rectangle geometry;
+        protected bool enabled;
+        protected bool visible = false;
+
+        public bool suppressDraw;
         public Widget(HUD ownerHUD, Rectangle renderTransform)
         {
             this.ownerHUD = ownerHUD;
             geometry = renderTransform;
+            visible = true;
+        }
+
+        public void RelativizeGeometry(Widget relativeTo)
+        {
+            geometry.X += relativeTo.geometry.X;
+            geometry.Y += relativeTo.geometry.Y;
+            geometry.Width = relativeTo.geometry.Width;
+            geometry.Height = relativeTo.geometry.Height;
+        }
+
+        public Rectangle GetGeometry()
+        {
+            return geometry;
+        }
+
+        public void SetGeometry(Rectangle newGeo)
+        {
+            geometry = newGeo;
+        }
+
+        public void SetEnabled(bool newState)
+        {
+            enabled = newState;
         }
 
         /// <summary>
@@ -23,7 +51,12 @@ namespace EngineZ.UI
         /// </summary>
         public virtual void Construct()
         {
-            throw new Exception("Default Widget cannot invoke Construct()");
+            //throw new Exception("Default Widget cannot invoke Construct()");
+        }
+
+        public void DestroyWidget()
+        {
+            Dispose();
         }
 
         public void Dispose()
@@ -33,7 +66,9 @@ namespace EngineZ.UI
 
         public unsafe virtual void Draw(ref SpriteBatch spriteBatch)
         {
+            if (!visible) return;
 
+            spriteBatch.GraphicsDevice.BlendState = enabled? BlendState.Opaque : BlendState.AlphaBlend;
         }
 
         public bool isHovered()
