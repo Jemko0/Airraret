@@ -1,17 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EngineZ.DataStructures;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineZ.UI
 {
     public class PanelWidget : Widget
     {
-        private List<Widget> children = new List<Widget>();
+        private protected List<Widget> children = new List<Widget>();
+        private protected bool relativizeInheritWH = false;
         public PanelWidget(HUD ownerHUD, Rectangle renderTransform) : base(ownerHUD, renderTransform)
+        {
+        }
+
+        public PanelWidget(HUD ownerHUD, Rectangle renderTransform, EWidgetAlignment widgetAlignment) : base(ownerHUD, renderTransform, widgetAlignment)
         {
         }
 
@@ -22,9 +24,10 @@ namespace EngineZ.UI
 
         public void AddChild(Widget w)
         {
-            w.RelativizeGeometry(this);
+            w.RelativizeGeometry(this, relativizeInheritWH);
             children.Add(w);
         }
+
 
         public void RemoveChild(Widget w)
         {
@@ -44,10 +47,12 @@ namespace EngineZ.UI
             DrawChildren(ref spriteBatch);
         }
 
-        public void DrawChildren(ref SpriteBatch spriteBatch)
+        public virtual void DrawChildren(ref SpriteBatch spriteBatch)
         {
             foreach (Widget w in children)
             {
+                w.RelativizeGeometry(this, relativizeInheritWH);
+                w.UpdateScale();
                 w.Draw(ref spriteBatch);
             }
         }

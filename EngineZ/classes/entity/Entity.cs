@@ -16,7 +16,7 @@ namespace EngineZ.Entities
         public EntityDef type;
         public Rectangle rect;
         public Vector2 velocity = new Vector2(0, 0);
-        public Entity(Game game, EntityTypes initType) : base(game)
+        public Entity(Game game, EEntityTypes initType) : base(game)
         {
             type.type = initType;
             Enabled = true;

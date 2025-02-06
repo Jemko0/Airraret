@@ -11,7 +11,7 @@ namespace EngineZ.UI
     {
         public WButton(HUD ownerHUD, Rectangle renderTransform) : base(ownerHUD, renderTransform)
         {
-            
+            relativizeInheritWH = true;
         }
 
         public delegate void widgetButtonPressed(ButtonInteractionEventArgs args);
@@ -19,10 +19,8 @@ namespace EngineZ.UI
         public event widgetButtonPressed buttonPressed;
         public event widgetButtonReleased buttonReleased;
 
-
         protected Texture2D buttonTex = Main.GetGame().Content.Load<Texture2D>("Textures/UI/btn_basic");
         protected Texture2D buttonHoveredTex = new Texture2D(Main.GetGame().GraphicsDevice, 1, 1);
-        //protected Texture2D buttonPressedTex = Main.GetGame().Content.Load<Texture2D>("Textures/UI/btn_basic_press");
         public override void Construct()
         {
             buttonHoveredTex.SetData(new Color[]{Color.SlateGray});
@@ -32,7 +30,7 @@ namespace EngineZ.UI
 
         private void OnGlobalClick(Events.Mouse.MouseClickEventArgs args)
         {
-            if (isHovered())
+            if (isHovered)
             {
                 OnWidgetClicked(args);
             }
@@ -53,9 +51,9 @@ namespace EngineZ.UI
 
         public override unsafe void Draw(ref SpriteBatch spriteBatch)
         {
+            Texture2D drawTexture = isHovered ? buttonHoveredTex : buttonTex;
+            spriteBatch.Draw(drawTexture, scaledGeometry, Color.White);
             base.Draw(ref spriteBatch);
-            Texture2D drawTexture = isHovered() ? buttonHoveredTex : buttonTex;
-            spriteBatch.Draw(drawTexture, geometry, Color.White);
         }
     }
 

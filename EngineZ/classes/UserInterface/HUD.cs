@@ -1,9 +1,11 @@
 ﻿using EngineZ.classes.interfaces;
 using EngineZ.DataStructures;
+using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace EngineZ.UI
 {
@@ -12,22 +14,41 @@ namespace EngineZ.UI
         protected unsafe SpriteBatch spriteBatch;
         protected unsafe GraphicsDeviceManager GDM;
         private static List<Widget> activeWidgets = new List<Widget>();
+        public static float DPIScale;
         public HUD()
         {
-            WButton b = CreateWidget<WButton>(this, new Rectangle(400, 100, 250, 100));
-            WTextBlock tb = CreateWidget<WTextBlock>(this, new Rectangle(0, 0, 100, 100), "Testtext", TextJustification.Right);
-            b.AddChild(tb);
+            Main.GetGame().Window.ClientSizeChanged += WindowResized;
+        }
+
+        private void WindowResized(object sender, EventArgs e)
+        {
+            CalcDPIScale();
+        }
+
+        private void CalcDPIScale()
+        {
+            //DPIScale = Main.GetGame().Window.ClientBounds.Width > Main.GetGame().Window.ClientBounds.Height ? Main.GetGame().Window.ClientBounds.Width / 1920.0f : Main.GetGame().Window.ClientBounds.Height / 1080.0f;
+            DPIScale = Main.GetGame().Window.ClientBounds.Height / 1080.0f;
+            Logger.Log(ELogCategory.LogUI, "DPI SCALE IS: ", DPIScale);
+
+            foreach (Widget widget in activeWidgets)
+            {
+                widget.UpdateScale();
+            }
         }
 
         public unsafe void InitHUD(ref SpriteBatch spriteBatch, ref GraphicsDeviceManager gdm)
         {
             this.spriteBatch = spriteBatch;
             GDM = gdm;
+            CalcDPIScale();
+            CreateWidget<UWTitleScreen>(this, new Rectangle(0, 0, 0, 0), EWidgetAlignment.Fill);
         }
 
         public static T CreateWidget<T>(params object?[]? args) where T : Widget
         {
             T newWidget = (T)Activator.CreateInstance(typeof(T), args);
+            newWidget.UpdateScale();
             newWidget.Construct();
             activeWidgets.Add(newWidget);
             return newWidget;

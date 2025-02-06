@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace EngineZ.DataStructures
 {
-    public enum EntityTypes
+    public enum EEntityTypes
     {
         None = -1,
         Default,
         Player,
     }
 
-    public enum TileTypes
+    public enum ETileTypes
     {
         Air = 0,
         Dirt = 1,
@@ -24,7 +24,7 @@ namespace EngineZ.DataStructures
 
     public struct EntityDef
     {
-        public EntityTypes type;
+        public EEntityTypes type;
         public Vector2 dimensions;
         public Texture2D sprite;
         public Color tint;
@@ -38,10 +38,23 @@ namespace EngineZ.DataStructures
         public Color tint;
     }
 
-    public enum TextJustification
+    public enum ETextJustification
     {
         Left,
         Center,
         Right,
+    }
+    public enum ELogCategory
+    {
+        LogUndefined = 0,
+        LogUI,
+        LogEntity,
+        LogPlayerController,
+    }
+
+    public enum EWidgetAlignment
+    {
+        TopLeft,
+        Fill,
     }
 }

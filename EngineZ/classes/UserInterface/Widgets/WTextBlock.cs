@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +19,13 @@ namespace EngineZ.UI
     public class WTextBlock : Widget
     {
         public string text = "TextBlock";
-        public TextJustification justification;
+        public ETextJustification justification;
         Vector2 renderPosition;
         public WTextBlock(HUD ownerHUD, Rectangle renderTransform) : base(ownerHUD, renderTransform)
         {
         }
 
-        public WTextBlock(HUD ownerHUD, Rectangle renderTransform, string initialText, TextJustification justification) : base(ownerHUD, renderTransform)
+        public WTextBlock(HUD ownerHUD, Rectangle renderTransform, string initialText, ETextJustification justification) : base(ownerHUD, renderTransform)
         {
             text = initialText;
             this.justification = justification;
@@ -41,14 +42,14 @@ namespace EngineZ.UI
             {
                 switch (justification)
                 {
-                    case TextJustification.Left:
-                        return new Vector2(geometry.Left, geometry.Center.Y - Airraret.gameFont28.LineSpacing / 2);
+                    case ETextJustification.Left:
+                        return new Vector2(scaledGeometry.Left, scaledGeometry.Center.Y - Airraret.gameFont24.LineSpacing * HUD.DPIScale / 2);
 
-                    case TextJustification.Center:
-                        return new Vector2(geometry.Center.X - Airraret.gameFont28.MeasureString(text).Length() / 2, geometry.Center.Y - Airraret.gameFont28.LineSpacing / 2);
+                    case ETextJustification.Center:
+                        return new Vector2(scaledGeometry.Center.X - Airraret.gameFont24.MeasureString(text).Length() * HUD.DPIScale / 2, scaledGeometry.Center.Y - Airraret.gameFont24.LineSpacing * HUD.DPIScale / 2);
 
-                    case TextJustification.Right:
-                        return new Vector2(geometry.Right - Airraret.gameFont28.MeasureString(text).Length(), geometry.Center.Y - Airraret.gameFont28.LineSpacing / 2);
+                    case ETextJustification.Right:
+                        return new Vector2(scaledGeometry.Right - Airraret.gameFont24.MeasureString(text).Length() * HUD.DPIScale, scaledGeometry.Center.Y - Airraret.gameFont24.LineSpacing * HUD.DPIScale / 2);
                 }
             }
             else
@@ -61,7 +62,7 @@ namespace EngineZ.UI
         public override void Draw(ref SpriteBatch spriteBatch)
         {
             base.Draw(ref spriteBatch);
-            spriteBatch.DrawString(Airraret.gameFont28, text, GetJustificationRenderPosition(), Color.White);
+            spriteBatch.DrawString(Airraret.gameFont24, text, GetJustificationRenderPosition(), Color.White, 0, new Vector2(0, 0), HUD.DPIScale, SpriteEffects.None, 0.0f);
         }
     }
 }

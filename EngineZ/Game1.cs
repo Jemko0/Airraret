@@ -25,7 +25,7 @@ namespace EngineZ
         private Camera clientCamera;
         private HUD clientHUD;
         private PlayerController LocalPlayerController;
-        public static SpriteFont gameFont28;
+        public static SpriteFont gameFont24;
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -35,7 +35,7 @@ namespace EngineZ
 
         protected override void Initialize()
         {
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
             Window.Title = "lol";
 
             LocalPlayerController = new PlayerController(this, 0);
@@ -48,7 +48,7 @@ namespace EngineZ
 
         }
         #region createDestroy
-        public static Entity? CreateEntity<T>(EntityTypes type) where T : Entity
+        public static Entity? CreateEntity<T>(EEntityTypes type) where T : Entity
         {
             T e = (T)Activator.CreateInstance(typeof(T), Main.GetGame(), type);
             if (RegisterEntity(e))
@@ -91,12 +91,12 @@ namespace EngineZ
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            gameFont28 = Content.Load<SpriteFont>("Fonts/Andy");
+            gameFont24 = Content.Load<SpriteFont>("Fonts/Andy");
 
             clientHUD = new HUD();
             clientHUD.InitHUD(ref _spriteBatch, ref _graphics);
 
-            Entity b = CreateEntity<Character>(EntityTypes.Player);
+            Entity b = CreateEntity<Character>(EEntityTypes.Player);
             b.SetLocation(50, -500);
 
             LocalPlayerController.Posess(b);
@@ -190,14 +190,14 @@ namespace EngineZ
                             (int)scaledTileSize
                         );
 
-                        TileTypes tileType = World.tiles[tilePos];
+                        ETileTypes tileType = World.tiles[tilePos];
                         Tile tileData = TileID.GetTile(tileType);
                         _spriteBatch.Draw(tileData.sprite, drawRect, Color.White);
                     }
                 }
             }
 
-            _spriteBatch.DrawString(gameFont28, "test", new Vector2(25, 25), Color.Black);
+            _spriteBatch.DrawString(gameFont24, "test", new Vector2(25, 25), Color.Black);
             _spriteBatch.End();
             
             clientHUD.DrawWidgets();

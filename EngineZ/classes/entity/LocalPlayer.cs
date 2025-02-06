@@ -11,7 +11,7 @@ namespace EngineZ.classes.entity
 {
     public class LocalPlayer : Character
     {
-        public LocalPlayer(Game game, EntityTypes initType) : base(game, initType)
+        public LocalPlayer(Game game, EEntityTypes initType) : base(game, initType)
         {
         }
     }

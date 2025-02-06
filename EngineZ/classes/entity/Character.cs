@@ -16,7 +16,7 @@ namespace EngineZ.Entities
         public float acceleration = 1;
         public float maxWalkSpeed = 5;
         public float jumpPower = 10;
-        public Character(Game game, EntityTypes initType) : base(game, initType)
+        public Character(Game game, EEntityTypes initType) : base(game, initType)
         {
         }
 
@@ -33,7 +33,7 @@ namespace EngineZ.Entities
                     
                     if (World.tiles.ContainsKey(tilePos))
                     {
-                        TileTypes tileType = World.tiles[tilePos];
+                        ETileTypes tileType = World.tiles[tilePos];
                         Tile tileData = TileID.GetTile(tileType);
 
                         if (tileData.valid && tileData.collide)
