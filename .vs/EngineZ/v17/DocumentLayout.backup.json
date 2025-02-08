@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\world\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -173,20 +173,20 @@
               "RelativeDocumentMoniker": "EngineZ\\classes\\world\\World.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\world\\World.cs*",
               "RelativeToolTip": "EngineZ\\classes\\world\\World.cs*",
-              "ViewState": "AgIAAHwBAAAAAAAAAAAAwIYBAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAPkAAAAAAAAAAAASwAkBAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-08T10:50:15.569Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Game1.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
               "RelativeDocumentMoniker": "EngineZ\\Game1.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
               "RelativeToolTip": "EngineZ\\Game1.cs",
-              "ViewState": "AgIAAMIAAAAAAAAAAIAwwNgAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAKsAAAAAAAAAAIAwwMgAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T22:01:31.297Z",
               "EditorCaption": ""
@@ -231,13 +231,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Character.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Character.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\Character.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Character.cs",
               "RelativeToolTip": "EngineZ\\classes\\entity\\Character.cs",
-              "ViewState": "AgIAAA8BAAAAAAAAAAAwwB8BAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABQBAAAAAAAAAAAwwCQBAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-08T09:27:25.319Z",
               "EditorCaption": ""

@@ -31,7 +31,12 @@ namespace EngineZ.Entities
         private void MouseClickedOnWorld(Events.MouseEvent.MouseClickEventArgs args)
         {
             Vector2 tilePos = Camera.ScreenToTile(args.X, args.Y);
-            World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Air);
+            if (World.tiles.ContainsKey(tilePos))
+            {
+                World.tiles.Remove(tilePos);
+                // After removing the tile, update lighting in the area
+                World.RecalculateLightingAroundPoint(tilePos);
+            }
         }
 
         private void MoveWithCollision(ref int moveX, ref int moveY)

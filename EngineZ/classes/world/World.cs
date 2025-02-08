@@ -36,6 +36,7 @@ namespace EngineZ.classes.world
         public event TaskProgressChanged taskProgressChanged;
         public static List<float?> worldSurfaceTiles = new List<float?>();
         public static Vector2 worldSpawn;
+        public static Dictionary<Vector2, int> lightSources = new Dictionary<Vector2, int>();
 
         //Initialize Tasks
         public void GenFillWorld()
@@ -230,6 +231,133 @@ namespace EngineZ.classes.world
             }
             return false;
         }
+
+        public static void UpdateLighting(Vector2 position, int lightLevel)
+        {
+            // Don't process if light level is 0 or if the new light level would be lower
+            if (lightLevel <= 0 || (lightMap.ContainsKey(position) && lightMap[position] >= lightLevel))
+            {
+                return;
+            }
+
+            // Update current tile's light level
+            lightMap[position] = lightLevel;
+            
+            // Spread light to neighboring tiles with decreased intensity
+            Vector2[] neighbors = new Vector2[]
+            {
+                new Vector2(position.X + TILESIZE, position.Y),     // Right
+                new Vector2(position.X - TILESIZE, position.Y),     // Left
+                new Vector2(position.X, position.Y + TILESIZE),     // Down
+                new Vector2(position.X, position.Y - TILESIZE),     // Up
+            };
+
+            // Count solid neighbors
+            int solidNeighbors = 0;
+            foreach (Vector2 neighbor in neighbors)
+            {
+                if (tiles.ContainsKey(neighbor) && tiles[neighbor] != ETileTypes.Air)
+                {
+                    solidNeighbors++;
+                }
+            }
+
+            // Calculate new light level - less reduction when there are more solid neighbors
+            int newLight = lightLevel - 1;
+            
+            // Propagate to neighbors
+            foreach (Vector2 neighbor in neighbors)
+            {
+                if (tiles.ContainsKey(neighbor))
+                {
+                    // Air propagates light better than solid blocks
+                    int neighborNewLight = tiles[neighbor] == ETileTypes.Air || !tiles.ContainsKey(neighbor) ? newLight : newLight - 1;
+                    UpdateLighting(neighbor, neighborNewLight);
+                }
+            }
+        }
+
+        public static int GetLightLevel(Vector2 position)
+        {
+            if (lightMap.ContainsKey(position))
+            {
+                return lightMap[position];
+            }
+            return 0;
+        }
+
+        public static void RecalculateLightingAroundPoint(Vector2 position, int radius = 32)
+        {
+            HashSet<Vector2> lightSourcePositions = new HashSet<Vector2>();
+
+            // First, clear lighting in the affected area
+            for (int x = -radius; x <= radius; x += TILESIZE)
+            {
+                for (int y = -radius; y <= radius; y += TILESIZE)
+                {
+                    Vector2 checkPos = new Vector2(position.X + x, position.Y + y);
+                    if (lightMap.ContainsKey(checkPos))
+                    {
+                        lightMap.Remove(checkPos);
+                    }
+
+                    // If this position is air or doesn't exist (void), it's a natural light source
+                    if (!tiles.ContainsKey(checkPos) || tiles[checkPos] == ETileTypes.Air)
+                    {
+                        lightSourcePositions.Add(checkPos);
+                    }
+                    // If it's a solid tile but adjacent to air, add the adjacent air positions as light sources
+                    else
+                    {
+                        Vector2[] neighbors = new Vector2[]
+                        {
+                            new Vector2(checkPos.X + TILESIZE, checkPos.Y),  // Right
+                            new Vector2(checkPos.X - TILESIZE, checkPos.Y),  // Left
+                            new Vector2(checkPos.X, checkPos.Y + TILESIZE),  // Down
+                            new Vector2(checkPos.X, checkPos.Y - TILESIZE)   // Up
+                        };
+
+                        foreach (Vector2 neighbor in neighbors)
+                        {
+                            if (!tiles.ContainsKey(neighbor) || tiles[neighbor] == ETileTypes.Air)
+                            {
+                                lightSourcePositions.Add(neighbor);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Apply natural lighting from air/void (always intensity 16)
+            foreach (Vector2 source in lightSourcePositions)
+            {
+                UpdateLighting(source, 16);
+            }
+
+            // Apply artificial lighting from light sources within radius
+            foreach (var lightSource in lightSources)
+            {
+                if (Vector2.Distance(lightSource.Key, position) <= radius)
+                {
+                    UpdateLighting(lightSource.Key, lightSource.Value);
+                }
+            }
+        }
+
+        public static void AddLightSource(Vector2 position, int intensity)
+        {
+            lightSources[position] = intensity;
+            RecalculateLightingAroundPoint(position);
+        }
+
+        public static void RemoveLightSource(Vector2 position)
+        {
+            if (lightSources.ContainsKey(position))
+            {
+                lightSources.Remove(position);
+                RecalculateLightingAroundPoint(position);
+            }
+        }
     }
 
 
@@ -382,26 +510,22 @@ namespace EngineZ.classes.world
 
         public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
         {
-            int currentLight = 16;
-            int i = 0;
-            foreach(var tile in World.tiles)
-            {
-                i++;
+            // Clear existing light map
+            World.lightMap.Clear();
 
-                Vector2 below = new Vector2(tile.Key.X, tile.Key.Y - 32);
-                if (World.tiles.ContainsKey(below))
-                {
-                    if (World.tiles[below] == ETileTypes.Air)
-                    {
-                        currentLight = 1;
-                    }
-                }
-                World.lightMap[tile.Key] = currentLight;
+            // Initialize surface tiles with maximum light
+            for (int x = 0; x < wparams.maxTilesX; x++)
+            {
+                float surfaceHeight = World.GetSurfaceHeightAtIdx(x);
+                Vector2 surfacePos = new Vector2(x * World.TILESIZE, -surfaceHeight * World.TILESIZE);
+                
+                // Update lighting starting from surface
+                World.UpdateLighting(surfacePos, 16);
 
                 progress?.Report(new WorldGenProgress()
                 {
                     CurrentTask = "Lighting Tiles",
-                    PercentComplete = i / 100,
+                    PercentComplete = (float)x / wparams.maxTilesX,
                 });
             }
 

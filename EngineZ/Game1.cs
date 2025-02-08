@@ -148,22 +148,6 @@ namespace EngineZ
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap);
 
-
-            //Entity Render
-            for (int i = 0; i < entities.Length; i++)
-            {
-                if (entities[i] == null)
-                    continue;
-
-                Rectangle renderRect = new Rectangle();
-                renderRect = entities[i].GetRect();
-                Vector2 newPos = Camera.GetTransformed(new Vector2(renderRect.X, renderRect.Y));
-                renderRect.X = (int)newPos.X;
-                renderRect.Y = (int)newPos.Y;
-
-                renderRect = Camera.ScaleRectToDPI(renderRect);
-                _spriteBatch.Draw(entities[i].type.sprite, renderRect, entities[i].type.tint);
-            }
             if(renderWorld)
             {
                 float scale = HUD.DPIScale;
@@ -171,11 +155,11 @@ namespace EngineZ
 
                 int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
                 int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
-                int endX = startX + Main.GetGame().Window.ClientBounds.Width / World.TILESIZE;
-                int endY = startY + Main.GetGame().Window.ClientBounds.Height / World.TILESIZE;
+                int endX = startX + Window.ClientBounds.Width / World.TILESIZE;
+                int endY = startY + Window.ClientBounds.Height / World.TILESIZE;
 
-                float screenCenterX = Main.GetGame().Window.ClientBounds.Width / 2f;
-                float screenCenterY = Main.GetGame().Window.ClientBounds.Height / 2f;
+                float screenCenterX = Window.ClientBounds.Width / 2f;
+                float screenCenterY = Window.ClientBounds.Height / 2f;
 
                 for (int x = startX; x < endX; x++)
                 {
@@ -185,11 +169,9 @@ namespace EngineZ
 
                         if (World.tiles.ContainsKey(tilePos))
                         {
-                            // Calculate position relative to screen center, Y increases downward
                             float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
                             float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
 
-                            // Scale the relative position
                             float scaledX = relativeX * scale;
                             float scaledY = relativeY * scale;
 
@@ -205,13 +187,35 @@ namespace EngineZ
                             {
                                 continue;
                             }
+
                             Tile tileData = TileID.GetTile(tileType);
                             Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
 
-                            _spriteBatch.Draw(tileData.sprite, drawRect, frame, tileData.tint);
+                            // Apply lighting
+                            int lightLevel = World.GetLightLevel(tilePos);
+                            float lightIntensity = lightLevel / 15f; // Assuming max light level is 16
+                            Color lightColor = tileData.tint * lightIntensity;
+                            lightColor.A = 0xff;
+                            _spriteBatch.Draw(tileData.sprite, drawRect, frame, lightColor);
                         }
                     }
                 }
+            }
+
+            //Entity Render
+            for (int i = 0; i < entities.Length; i++)
+            {
+                if (entities[i] == null)
+                    continue;
+
+                Rectangle renderRect = new Rectangle();
+                renderRect = entities[i].GetRect();
+                Vector2 newPos = Camera.GetTransformed(new Vector2(renderRect.X, renderRect.Y));
+                renderRect.X = (int)newPos.X;
+                renderRect.Y = (int)newPos.Y;
+
+                renderRect = Camera.ScaleRectToDPI(renderRect);
+                _spriteBatch.Draw(entities[i].type.sprite, renderRect, entities[i].type.tint);
             }
 
             _spriteBatch.End();
