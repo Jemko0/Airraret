@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 
 namespace EngineZ.UI
@@ -71,7 +72,7 @@ namespace EngineZ.UI
         public unsafe void DrawWidgets()
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap);
-            foreach (Widget w in activeWidgets)
+            foreach (Widget w in activeWidgets.ToList())
             {
                 if (w.suppressDraw)
                     continue;

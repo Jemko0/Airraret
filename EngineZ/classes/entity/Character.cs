@@ -4,6 +4,7 @@ using EngineZ.classes.world;
 using EngineZ.DataStructures;
 using EngineZ.ID;
 using EngineZ.Input;
+using EngineZ.UI;
 using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,17 +30,8 @@ namespace EngineZ.Entities
 
         private void MouseClickedOnWorld(Events.MouseEvent.MouseClickEventArgs args)
         {
-            float x = args.X;
-            float y = args.Y;
-            x += Camera.cameraPosition.X;
-            y += Camera.cameraPosition.Y;
-
-            x = (float)Math.Round(x / 16.0f) * 16;
-            y = (float)Math.Round(y / 16.0f) * 16;
-
-            Logger.Log(ELogCategory.LogUndefined, x, y);
-
-            World.SetTile((int)x, (int)y, ETileTypes.Air);
+            Vector2 tilePos = Camera.ScreenToTile(args.X, args.Y);
+            World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Air);
         }
 
         private void MoveWithCollision(ref int moveX, ref int moveY)
@@ -293,7 +285,7 @@ namespace EngineZ.Entities
             if (Math.Abs(velocity.X) > 0 && IsOnGround() && lastInputLR == 0)
             {
                 velocity.X /= 1 + groundFriction * Main.delta;
-                if (Math.Abs(velocity.X) < 0.1f)
+                if (Math.Abs(velocity.X) < 0.01f)
                     velocity.X = 0;
             }
 

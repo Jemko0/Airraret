@@ -201,8 +201,12 @@ namespace EngineZ
                             );
 
                             ETileTypes tileType = World.tiles[tilePos];
+                            if(tileType == ETileTypes.Air)
+                            {
+                                continue;
+                            }
                             Tile tileData = TileID.GetTile(tileType);
-                            Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y);
+                            Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
 
                             _spriteBatch.Draw(tileData.sprite, drawRect, frame, tileData.tint);
                         }
@@ -215,6 +219,11 @@ namespace EngineZ
             clientHUD.DrawWidgets();
 
             base.Draw(gameTime);
+        }
+
+        private void LightTile()
+        {
+
         }
     }
 }

@@ -41,6 +41,13 @@ namespace EngineZ.ID
         {
             Tile t = new Tile();
 
+            //defaults
+            t.framePadding = 2;
+            t.frameSize = 16;
+            t.valid = true;
+            t.collide = true;
+            t.tint = Color.White;
+
             switch (type)
             {
                 case ETileTypes.Air:
@@ -48,17 +55,11 @@ namespace EngineZ.ID
                     break;
 
                 case ETileTypes.Dirt:
-                    t.valid = true;
-                    t.collide = true;
-                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/debugTile");
-                    t.tint = Color.White;
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/dirt");
                     break;
 
                 case ETileTypes.Grass:
-                    t.valid = true;
-                    t.collide = true;
-                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/debugTile");
-                    t.tint = Color.Green;
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/grass");
                     break;
             }
 

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EngineZ.classes.world
@@ -27,12 +28,12 @@ namespace EngineZ.classes.world
         public static int TILESIZE = 16;
 
         public static List<WorldGenTask> tasks = new List<WorldGenTask>();
+        public static Dictionary<Vector2, int> lightMap = new Dictionary<Vector2, int>();
         public Progress<WorldGenProgress> currentTaskProgress;
         private static TaskCompletionSource<bool> currentCompletionSource;
-
+        
         public delegate void TaskProgressChanged(object sender, WorldGenProgress e);
         public event TaskProgressChanged taskProgressChanged;
-
         public static List<float?> worldSurfaceTiles = new List<float?>();
         public static Vector2 worldSpawn;
 
@@ -42,6 +43,7 @@ namespace EngineZ.classes.world
             tasks.Add(new WGT_Reset("reset"));
             tasks.Add(new WGT_Terrain("fill"));
             tasks.Add(new WGT_FindSpawn("spawn"));
+            tasks.Add(new WGT_FinalizeLightTiles("light"));
         }
 
         public async Task GenerateWorld(WorldGenParams newParams)
@@ -104,42 +106,44 @@ namespace EngineZ.classes.world
             }
         }
 
-        public static Rectangle GetTileFrame(int xWorld, int yWorld)
+        public static Rectangle GetTileFrame(int xWorld, int yWorld, Tile tileData)
         {
-            Rectangle tileFrame = new Rectangle(0, 0, 16, 16);
+            Rectangle tileFrame = new Rectangle(0, 0, tileData.frameSize, tileData.frameSize);
 
             bool r = IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
             bool l = IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
             bool t = IsValidTile(xWorld, yWorld - World.TILESIZE); //TOP
             bool b = IsValidTile(xWorld, yWorld + World.TILESIZE); //BOTTOM
 
-            if(r && !l && !t && !b)
+            int frameSlot = tileData.frameSize + tileData.framePadding;
+
+            if (r && !l && !t && !b)
             {
-                tileFrame.X = 16;
+                tileFrame.X = frameSlot;
                 tileFrame.Y = 0;
             }
 
             if (!r && l && !t && !b)
             {
-                tileFrame.X = 32;
+                tileFrame.X = frameSlot * 2;
                 tileFrame.Y = 0;
             }
 
             if (!r && !l && t && !b)
             {
-                tileFrame.X = 48;
+                tileFrame.X = frameSlot * 3;
                 tileFrame.Y = 0;
             }
 
             if (!r && !l && !t && b)
             {
-                tileFrame.X = 64;
+                tileFrame.X = frameSlot * 4;
                 tileFrame.Y = 0;
             }
 
             if(r && l && t && b)
             {
-                tileFrame.X = 80;
+                tileFrame.X = frameSlot * 5;
                 tileFrame.Y = 0;
             }
 
@@ -148,65 +152,71 @@ namespace EngineZ.classes.world
             if (r && l && !t && !b)
             {
                 tileFrame.X = 0;
-                tileFrame.Y = 16;
+                tileFrame.Y = frameSlot;
             }
 
             #region RIGHT + OTHER
             if (r && !l && t && !b) //RT
             {
-                tileFrame.X = 16;
-                tileFrame.Y = 16;
+                tileFrame.X = frameSlot;
+                tileFrame.Y = frameSlot;
             }
 
             if (r && !l && !t && b) //RB
             {
-                tileFrame.X = 32;
-                tileFrame.Y = 16;
+                tileFrame.X = frameSlot * 2;
+                tileFrame.Y = frameSlot;
             }
 
             if (r && !l && t && b) //RTB
             {
                 tileFrame.X = 0;
-                tileFrame.Y = 32;
+                tileFrame.Y = frameSlot * 2;
             }
             #endregion
 
             #region LEFT + OTHER
             if (!r && l && t && !b) //LT
             {
-                tileFrame.X = 48;
-                tileFrame.Y = 16;
+                tileFrame.X = frameSlot * 3;
+                tileFrame.Y = frameSlot;
             }
 
             if (!r && l && !t && b) //LB
             {
-                tileFrame.X = 64;
-                tileFrame.Y = 16;
+                tileFrame.X = frameSlot * 4;
+                tileFrame.Y = frameSlot;
             }
 
             if (!r && l && t && b) //LTB
             {
-                tileFrame.X = 16;
-                tileFrame.Y = 32;
+                tileFrame.X = frameSlot;
+                tileFrame.Y = frameSlot * 2;
             }
             #endregion
 
             if (r && l && !t && b) //RLB
             {
-                tileFrame.X = 32;
-                tileFrame.Y = 32;
+                tileFrame.X = frameSlot * 2;
+                tileFrame.Y = frameSlot * 2;
             }
 
             if (r && l && t && !b) //RLT
             {
-                tileFrame.X = 48;
-                tileFrame.Y = 32;
+                tileFrame.X = frameSlot * 3;
+                tileFrame.Y = frameSlot * 2;
             }
 
             if (!r && !l && !t && !b) //0
             {
-                tileFrame.X = 64;
-                tileFrame.Y = 32;
+                tileFrame.X = frameSlot * 4;
+                tileFrame.Y = frameSlot * 2;
+            }
+
+            if(!r && !l && t && b)
+            {
+                tileFrame.X = frameSlot * 5;
+                tileFrame.Y = frameSlot * 1;
             }
 
             return tileFrame;
@@ -286,6 +296,7 @@ namespace EngineZ.classes.world
                     }
 
                     World.tiles.Add(new Vector2(x * World.TILESIZE, y * World.TILESIZE), ETileTypes.Dirt);
+
                     progress?.Report(new WorldGenProgress()
                     {
                         CurrentTask = "Filling World...",
@@ -320,6 +331,12 @@ namespace EngineZ.classes.world
 
                     World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
                 }
+
+                progress?.Report(new WorldGenProgress()
+                {
+                    CurrentTask = "Terrain",
+                    PercentComplete = ((float)x / wparams.maxTilesX),
+                });
             }
             World.CompleteCurrent();
         }
@@ -346,6 +363,47 @@ namespace EngineZ.classes.world
             float sY = World.GetSurfaceHeightAtIdx(sX);
 
             World.worldSpawn = new Vector2(sX * World.TILESIZE, -(sY + 4) * World.TILESIZE);
+
+            progress?.Report(new WorldGenProgress()
+            {
+                CurrentTask = "Finding Spawn",
+                PercentComplete = 1.0f,
+            });
+
+            World.CompleteCurrent();
+        }
+    }
+
+    public class WGT_FinalizeLightTiles : WorldGenTask
+    {
+        public WGT_FinalizeLightTiles(string identifier) : base(identifier)
+        {
+        }
+
+        public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
+        {
+            int currentLight = 16;
+            int i = 0;
+            foreach(var tile in World.tiles)
+            {
+                i++;
+
+                Vector2 below = new Vector2(tile.Key.X, tile.Key.Y - 32);
+                if (World.tiles.ContainsKey(below))
+                {
+                    if (World.tiles[below] == ETileTypes.Air)
+                    {
+                        currentLight = 1;
+                    }
+                }
+                World.lightMap[tile.Key] = currentLight;
+
+                progress?.Report(new WorldGenProgress()
+                {
+                    CurrentTask = "Lighting Tiles",
+                    PercentComplete = i / 100,
+                });
+            }
 
             World.CompleteCurrent();
         }

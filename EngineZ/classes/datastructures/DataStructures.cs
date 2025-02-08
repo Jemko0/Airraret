@@ -38,7 +38,8 @@ namespace EngineZ.DataStructures
         public bool valid;
         public bool collide;
         public Texture2D sprite;
-        public const int tileFrameSize = 16;
+        public int frameSize;
+        public int framePadding;
         public Color tint;
     }
 

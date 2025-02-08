@@ -147,6 +147,7 @@ namespace EngineZ.UI
                 {
                     ownerHUD = null;
                     visible = false;
+                    ClearDelegates();
                     if(widgetDestroyed != null)
                     {
                         widgetDestroyed.Invoke(new WidgetDestroyEventArgs(this));
@@ -160,6 +161,14 @@ namespace EngineZ.UI
 
                 disposed = true;
             }
+        }
+
+        /// <summary>
+        /// use to remove any custom delegates on widget destroyation :p
+        /// </summary>
+        public virtual void ClearDelegates()
+        {
+
         }
         private Texture2D debugRect;
         private Texture2D debugRectOutline;

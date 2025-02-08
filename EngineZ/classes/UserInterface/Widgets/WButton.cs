@@ -62,6 +62,12 @@ namespace EngineZ.UI
             spriteBatch.Draw(drawTexture, scaledGeometry, Color.White);
             base.Draw(ref spriteBatch);
         }
+
+        public override void ClearDelegates()
+        {
+            buttonPressed = null;
+            buttonReleased = null;
+        }
     }
 
     public class ButtonInteractionEventArgs
