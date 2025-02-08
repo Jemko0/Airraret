@@ -20,8 +20,9 @@ namespace EngineZ.DataStructures
     public enum ETileTypes
     {
         Air = 0,
-        Dirt = 1,
-        Stone = 2,
+        Dirt,
+        Stone,
+        Grass,
     }
 
     public struct EntityDef
@@ -37,6 +38,7 @@ namespace EngineZ.DataStructures
         public bool valid;
         public bool collide;
         public Texture2D sprite;
+        public const int tileFrameSize = 16;
         public Color tint;
     }
 

@@ -42,6 +42,7 @@ namespace EngineZ.UI
             this.spriteBatch = spriteBatch;
             GDM = gdm;
             CalcDPIScale();
+            CreateWidget<UWFPSDisplay>(this, new Rectangle(0, 0, 1, 1));
         }
 
         public static T CreateWidget<T>(params object?[]? args) where T : Widget
@@ -53,7 +54,7 @@ namespace EngineZ.UI
             activeWidgets.Add(newWidget);
             return newWidget;
         }
-
+        
         private static void HUDElementDestroyed(Events.WidgetDestroyEventArgs args)
         {
             FullDestroyWidget(args.destroyedWidget);

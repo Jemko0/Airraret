@@ -32,6 +32,18 @@
 /processorParam:Quality=Best
 /build:Sound/Music/Title.wav
 
+#begin Textures/debugTile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/debugTile.png
+
 #begin Textures/dirt.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -3,6 +3,8 @@ using EngineZ.classes.interfaces;
 using EngineZ.classes.world;
 using EngineZ.DataStructures;
 using EngineZ.ID;
+using EngineZ.Input;
+using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,17 +13,33 @@ namespace EngineZ.Entities
 {
     public class Character : Entity
     {
-        public float acceleration = 1f;
-        public float maxWalkSpeed = 5;
-        public float jumpPower = 15;
-        public float groundFriction = 0.8f;
+        public float acceleration = 24.0f;
+        public float maxWalkSpeed = 350.0f;
+        public float jumpPower = 800.0f;
+        public float groundFriction = 6.0f;
         public float airControl = 0.5f;
-        public float airDecel = 0.96f;
+        public float airDecel = 4f;
 
         private const float skinWidth = 0.1f;
-        public float LastInputLR = 0.0f;
+        public float lastInputLR = 0.0f;
         public Character(Game game, EEntityTypes initType) : base(game, initType)
         {
+            InputHandler.onLeftMousePressed += MouseClickedOnWorld;
+        }
+
+        private void MouseClickedOnWorld(Events.MouseEvent.MouseClickEventArgs args)
+        {
+            float x = args.X;
+            float y = args.Y;
+            x += Camera.cameraPosition.X;
+            y += Camera.cameraPosition.Y;
+
+            x = (float)Math.Round(x / 16.0f) * 16;
+            y = (float)Math.Round(y / 16.0f) * 16;
+
+            Logger.Log(ELogCategory.LogUndefined, x, y);
+
+            World.SetTile((int)x, (int)y, ETileTypes.Air);
         }
 
         private void MoveWithCollision(ref int moveX, ref int moveY)
@@ -247,7 +265,7 @@ namespace EngineZ.Entities
         {
             if (IsOnGround())
             {
-                velocity.Y = -jumpPower;
+                velocity.Y = -jumpPower * Main.delta;
             }
         }
 
@@ -256,28 +274,25 @@ namespace EngineZ.Entities
             if (!IsOnGround())
             {
                 inputLR *= airControl;
-                velocity.X *= airDecel;
+                velocity.X /= 1 + airDecel * Main.delta;
             }
 
-            LastInputLR = inputLR;
-            velocity.X = Math.Clamp(velocity.X + inputLR * acceleration, -maxWalkSpeed, maxWalkSpeed);
+            lastInputLR = inputLR;
+            velocity.X = Math.Clamp(velocity.X + inputLR * acceleration * Main.delta, -maxWalkSpeed * Main.delta, maxWalkSpeed * Main.delta);
         }
 
         public void Move()
         {
-            velocity.Y += 0.654f; // Gravity
+            velocity.Y += 9.81f * (float)Main.GetGame().TargetElapsedTime.TotalSeconds; // Gravity
 
             // Convert velocity to movement amounts
             int moveX = (int)velocity.X;
             int moveY = (int)velocity.Y;
-
-            // Apply sweep and slide collision
             MoveWithCollision(ref moveX, ref moveY);
 
-            // Apply friction
-            if (Math.Abs(velocity.X) > 0 && IsOnGround() && LastInputLR == 0)
+            if (Math.Abs(velocity.X) > 0 && IsOnGround() && lastInputLR == 0)
             {
-                velocity.X *= groundFriction; // Friction when on ground
+                velocity.X /= 1 + groundFriction * Main.delta;
                 if (Math.Abs(velocity.X) < 0.1f)
                     velocity.X = 0;
             }

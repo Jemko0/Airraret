@@ -27,18 +27,21 @@ namespace EngineZ
         public static SpriteFont gameFont24;
         public static bool renderWorld;
         public MusicManager musicManager;
+
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            IsFixedTimeStep = true;
+            TargetElapsedTime = new TimeSpan(80000);
         }
 
         protected override void Initialize()
         {
             Window.AllowUserResizing = true;
-            Window.Title = "lol";
-
+            Window.Title = "Airarret";
+            
             clientCamera = new Camera();
             base.Initialize();
         }
@@ -143,7 +146,8 @@ namespace EngineZ
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(SpriteSortMode.Texture);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap);
+
 
             //Entity Render
             for (int i = 0; i < entities.Length; i++)
@@ -162,7 +166,7 @@ namespace EngineZ
             }
             if(renderWorld)
             {
-                float scale = Main.GetGame().GraphicsDevice.Viewport.Height / 1080f;
+                float scale = HUD.DPIScale;
                 float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * scale);
 
                 int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
@@ -198,8 +202,9 @@ namespace EngineZ
 
                             ETileTypes tileType = World.tiles[tilePos];
                             Tile tileData = TileID.GetTile(tileType);
+                            Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y);
 
-                            _spriteBatch.Draw(tileData.sprite, drawRect, Color.White);
+                            _spriteBatch.Draw(tileData.sprite, drawRect, frame, tileData.tint);
                         }
                     }
                 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using EngineZ.DataStructures;
+using EngineZ.classes.world;
+using System.Collections.Generic;
 
 namespace EngineZ.ID
 {
@@ -48,8 +50,15 @@ namespace EngineZ.ID
                 case ETileTypes.Dirt:
                     t.valid = true;
                     t.collide = true;
-                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/dirt");
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/debugTile");
                     t.tint = Color.White;
+                    break;
+
+                case ETileTypes.Grass:
+                    t.valid = true;
+                    t.collide = true;
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/debugTile");
+                    t.tint = Color.Green;
                     break;
             }
 
