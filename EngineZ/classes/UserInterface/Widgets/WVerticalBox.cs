@@ -5,7 +5,6 @@ namespace EngineZ.UI
 {
     public class WVerticalBox : PanelWidget
     {
-        public bool dbg = true;
         public bool vbChildrenInheritWidth = true;
 
         public WVerticalBox(HUD ownerHUD, Rectangle renderTransform) : base(ownerHUD, renderTransform)
@@ -15,23 +14,21 @@ namespace EngineZ.UI
 
         public override void Draw(ref SpriteBatch spriteBatch)
         {
-            Texture2D rect = new Texture2D(Main.GetGame().GraphicsDevice, 1, 1);
-            rect.SetData(new Color[] { Color.Red });
-
-            if(dbg)
-            {
-                spriteBatch.Draw(rect, scaledGeometry, Color.White);
-            }
-
             base.Draw(ref spriteBatch);
         }
 
         public override void DrawChildren(ref SpriteBatch spriteBatch)
         {
+            if (suppressDraw)
+                return;
+
             int childidx = children.Count; //reverse order bc it makes it the correct order
 
             foreach (Widget w in children)
             {
+                if (w.suppressDraw)
+                    continue;
+
                 Rectangle childGeo = w.GetGeometry();
                 
                 childGeo.X = GetGeometry().X;
@@ -42,7 +39,7 @@ namespace EngineZ.UI
                     childGeo.Width = GetGeometry().Width;
                 }
 
-                Vector2 childOrigin = new Vector2(origin.X, origin.Y);
+                Vector2 childOrigin = new Vector2(origin.X, origin.Y + w.GetGeometry().Height);
 
                 w.origin = childOrigin;
                 w.SetGeometry(childGeo);

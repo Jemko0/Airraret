@@ -1,8 +1,11 @@
 ﻿
 
+using EngineZ.classes.world;
 using EngineZ.DataStructures;
+using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace EngineZ.UI
 {
@@ -15,31 +18,47 @@ namespace EngineZ.UI
         public UWTitleScreen(HUD ownerHUD, Rectangle renderTransform, EWidgetAlignment widgetAlignment) : base(ownerHUD, renderTransform, widgetAlignment)
         {
         }
+
         WVerticalBox verticalBox;
+        WButton btn;
+        WButton btn2;
         public override void Construct()
         {
-            verticalBox = HUD.CreateWidget<WVerticalBox>(ownerHUD, new Rectangle(200, 0, 400, 800));
-            var btn = HUD.CreateWidget<WButton>(ownerHUD, new Rectangle(0, 0, 150, 72));
+            verticalBox = HUD.CreateWidget<WVerticalBox>(ownerHUD, new Rectangle(0, 0, 400, 800));
+            btn = HUD.CreateWidget<WButton>(ownerHUD, new Rectangle(0, 0, 150, 72));
             var btnText = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 0), "Play", ETextJustification.Center);
+            btn.buttonPressed += PlayButtonPressed;
             btn.AddChild(btnText);
             verticalBox.AddChild(btn);
 
-            btn = HUD.CreateWidget<WButton>(ownerHUD, new Rectangle(0, 0, 150, 72));
-            btnText = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 0), "Settings", ETextJustification.Center);
-            btn.AddChild(btnText);
-            verticalBox.AddChild(btn);
+            btn2 = HUD.CreateWidget<WButton>(ownerHUD, new Rectangle(0, 0, 150, 72));
+            var btnText2 = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 0), "Settings", ETextJustification.Center);
+            btn2.buttonPressed += SettingsButtonPressed;
+            btn2.AddChild(btnText2);
+            verticalBox.AddChild(btn2);
+
+            AddChild(verticalBox);
+            Logger.Log(ELogCategory.LogUI, btn2.GetScaledGeometry());
+        }
+
+        private void SettingsButtonPressed(ButtonInteractionEventArgs args)
+        {
+            
+        }
+
+        private void PlayButtonPressed(ButtonInteractionEventArgs args)
+        {
+            World.CreateWorld();
+            HUD.CreateWidget<UWWorldGenProgress>(ownerHUD, new Rectangle(0, 0, 1, 1), EWidgetAlignment.TopLeft);
+            DestroyWidget();
         }
 
         public override void Draw(ref SpriteBatch spriteBatch)
         {
-            verticalBox.origin = new Vector2(WidgetAlignments.GetFullScreenWidget().Width / 2, 400);
+            //GetGeometry().X = (int)(250 * HUD.DPIScale);
+            origin = new Vector2((WidgetAlignments.GetFullScreenWidget().Width / 2) - 200 * HUD.DPIScale, 500);
+            verticalBox.origin = origin;
             base.Draw(ref spriteBatch);
-
-            /*
-            Texture2D rect = new Texture2D(Main.GetGame().GraphicsDevice, 1, 1);
-            rect.SetData(new Color[] { Color.Yellow });
-            spriteBatch.Draw(rect, scaledGeometry, Color.White);
-            */
         }
     }
 }

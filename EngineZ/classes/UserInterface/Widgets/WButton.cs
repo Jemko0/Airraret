@@ -28,7 +28,7 @@ namespace EngineZ.UI
             InputHandler.onLeftMouseReleased += OnGlobalClick;
         }
 
-        private void OnGlobalClick(Events.Mouse.MouseClickEventArgs args)
+        private void OnGlobalClick(Events.MouseEvent.MouseClickEventArgs args)
         {
             if (isHovered)
             {
@@ -36,16 +36,23 @@ namespace EngineZ.UI
             }
         }
 
-        private void OnWidgetClicked(Events.Mouse.MouseClickEventArgs args)
+        private void OnWidgetClicked(Events.MouseEvent.MouseClickEventArgs args)
         {
 
             if(args.state == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
-                buttonPressed.Invoke(new ButtonInteractionEventArgs(args.state));
+                if(buttonPressed != null)
+                {
+                    buttonPressed.Invoke(new ButtonInteractionEventArgs(args.state));
+                }
+                
             }
             else
             {
-                buttonReleased.Invoke(new ButtonInteractionEventArgs(args.state));
+                if (buttonReleased != null)
+                {
+                    buttonReleased.Invoke(new ButtonInteractionEventArgs(args.state));
+                }
             }
         }
 

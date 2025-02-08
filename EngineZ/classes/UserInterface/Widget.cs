@@ -1,10 +1,13 @@
 ﻿using EngineZ.classes.interfaces;
 using EngineZ.DataStructures;
+using EngineZ.Events;
 using EngineZ.Input;
+using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace EngineZ.UI
 {
@@ -14,12 +17,19 @@ namespace EngineZ.UI
         private Rectangle geometry;
         protected Rectangle scaledGeometry;
         protected bool enabled;
-        protected bool visible = false;
+        public bool visible = false;
         public EWidgetAlignment alignment;
         public Vector2 origin;
+#if DEBUG
+        public bool widgetDebugDraw = false;
+#endif
         public bool isHovered => scaledGeometry.Contains(Mouse.GetState().X, Mouse.GetState().Y);
 
         public bool suppressDraw;
+
+        public delegate void OnWidgetDestroy(WidgetDestroyEventArgs args);
+        public event OnWidgetDestroy widgetDestroyed;
+
         public Widget(HUD ownerHUD, Rectangle renderTransform)
         {
             this.ownerHUD = ownerHUD;
@@ -70,7 +80,7 @@ namespace EngineZ.UI
             geometry.X = relativeTo.geometry.X;
             geometry.Y = relativeTo.geometry.Y;
             origin = relativeTo.origin;
-
+            
             if(inheritWH)
             {
                 geometry.Width = relativeTo.geometry.Width;
@@ -78,9 +88,14 @@ namespace EngineZ.UI
             }
         }
 
-        public Rectangle GetGeometry()
+        public ref Rectangle GetGeometry()
         {
-            return geometry;
+            return ref geometry;
+        }
+
+        public Rectangle GetScaledGeometry()
+        {
+            return scaledGeometry;
         }
 
         /// <summary>
@@ -112,19 +127,66 @@ namespace EngineZ.UI
         /// </summary>
         public void DestroyWidget()
         {
+            visible = false;
+            suppressDraw = true;
             Dispose();
         }
 
+        private bool disposed = false;
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
+            //GC.SuppressFinalize(this);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    ownerHUD = null;
+                    visible = false;
+                    if(widgetDestroyed != null)
+                    {
+                        widgetDestroyed.Invoke(new WidgetDestroyEventArgs(this));
+                    }
+                    else
+                    {
+                        Logger.Log(ELogCategory.LogUI, "widgetDestroyed delegate wasw null!");
+                    }
+                    
+                }
+
+                disposed = true;
+            }
+        }
+        private Texture2D debugRect;
+        private Texture2D debugRectOutline;
         public unsafe virtual void Draw(ref SpriteBatch spriteBatch)
         {
             if (!visible) return;
 
             spriteBatch.GraphicsDevice.BlendState = enabled? BlendState.Opaque : BlendState.AlphaBlend;
+#if DEBUG
+            if (widgetDebugDraw)
+            {
+                if (debugRect != null)
+                {
+                    spriteBatch.Draw(debugRectOutline, scaledGeometry, Color.Red);
+                    spriteBatch.Draw(debugRect, new Rectangle((int)origin.X, (int)origin.Y, 8, 8), Color.Yellow);
+                    spriteBatch.Draw(debugRect, new Rectangle(scaledGeometry.X, scaledGeometry.Y, 4, 4), Color.Blue);
+                    spriteBatch.DrawString(Airraret.gameFont24, GetType().Name, new Vector2(scaledGeometry.X, scaledGeometry.Y), Color.Yellow);
+                }
+                else
+                {
+                    debugRect = new Texture2D(Main.GetGame().GraphicsDevice, 1, 1);
+                    debugRect.SetData(new Color[] { Color.White });
+                    debugRectOutline = Main.GetGame().Content.Load<Texture2D>("Textures/UI/RectOutline");
+                }
+                
+            }
+#endif
         }
     }
 }

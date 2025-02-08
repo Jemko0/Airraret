@@ -42,27 +42,34 @@ namespace EngineZ.UI
             this.spriteBatch = spriteBatch;
             GDM = gdm;
             CalcDPIScale();
-            CreateWidget<UWTitleScreen>(this, new Rectangle(0, 0, 0, 0), EWidgetAlignment.Fill);
         }
 
         public static T CreateWidget<T>(params object?[]? args) where T : Widget
         {
             T newWidget = (T)Activator.CreateInstance(typeof(T), args);
+            newWidget.widgetDestroyed += HUDElementDestroyed;
             newWidget.UpdateScale();
             newWidget.Construct();
             activeWidgets.Add(newWidget);
             return newWidget;
         }
 
-        public static void DestroyWidget(Widget w)
+        private static void HUDElementDestroyed(Events.WidgetDestroyEventArgs args)
         {
-            activeWidgets.Remove(w);
-            w.Dispose();
+            FullDestroyWidget(args.destroyedWidget);
+        }
+
+        public static void FullDestroyWidget(Widget w)
+        {
+            if (w != null)
+            {
+                activeWidgets.Remove(w);
+            }
         }
 
         public unsafe void DrawWidgets()
         {
-            spriteBatch.Begin(SpriteSortMode.Immediate);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap);
             foreach (Widget w in activeWidgets)
             {
                 if (w.suppressDraw)
