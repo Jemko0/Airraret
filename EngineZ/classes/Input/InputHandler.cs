@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using static EngineZ.Events.Mouse;
+using static EngineZ.Events.MouseEvent;
 
 namespace EngineZ.Input
 {

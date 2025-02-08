@@ -47,6 +47,10 @@ namespace EngineZ.classes.gameplay
                 {
                     inputLR = 1;
                 }
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    ((Character)controlledEntity).Jump();
+                }
 
                 controlledEntity.AxisInput(inputLR);
             }

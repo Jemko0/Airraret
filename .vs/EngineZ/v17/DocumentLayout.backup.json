@@ -3,36 +3,88 @@
   "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\EngineZ\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\hud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\hud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\wbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\wbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\userwidgets\\world\\uwworldgenprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\userwidgets\\world\\uwworldgenprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\gameplay\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\gameplay\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\localplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\localplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\world\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\world\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\interfaces\\uiinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\interfaces\\uiinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\wverticalbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\wverticalbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\userwidgets\\uwtitlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\userwidgets\\uwtitlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\panelwidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\panelwidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\userwidgets\\uwtitlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\userwidgets\\uwtitlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\input\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\input\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\cam\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\cam\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\wbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\wbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgetutil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgetutil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\music\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\music\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\hud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\hud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\panelwidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\panelwidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\utility\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\utility\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\datastructures\\events.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,50 +93,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\userinterface\\widgets\\wtextblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\userinterface\\widgets\\wtextblock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\datastructures\\datastructures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\utility\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\utility\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\world\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\world\\world.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\input\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\input\\inputhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\interfaces\\uiinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\interfaces\\uiinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\cam\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\cam\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\localplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\localplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\gameplay\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\gameplay\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|solutionrelative:enginez\\classes\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8A2E2C21-47B4-4B6F-BCCF-2F7AD2109BE8}|EngineZ\\EngineZ.csproj|c:\\users\\user\\source\\repos\\enginez\\enginez\\classes\\lookups\\lookups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -98,17 +106,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 18,
               "Title": "HUD.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\HUD.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\HUD.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\HUD.cs",
               "RelativeToolTip": "EngineZ\\classes\\UserInterface\\HUD.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAowB4AAABLAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAewDAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-05T19:57:12.018Z",
               "IsPinned": true,
@@ -116,123 +124,34 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Widget.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widget.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widget.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widget.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widget.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAawDUAAAArAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "Entity.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\Entity.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
+              "RelativeToolTip": "EngineZ\\classes\\entity\\Entity.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAzwA0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T19:56:58.244Z",
+              "WhenOpened": "2025-02-04T23:54:09.349Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UWTitleScreen.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T14:51:51.141Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WVerticalBox.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAAB4AAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T14:05:34.345Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PanelWidget.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowDYAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T07:33:44.217Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "WidgetUtil.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAuwBQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T08:19:09.784Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WButton.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwC0AAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T20:54:29.379Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Game1.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
-              "RelativeDocumentMoniker": "EngineZ\\Game1.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
-              "RelativeToolTip": "EngineZ\\Game1.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwCUAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T22:01:31.297Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Events.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\Events.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\datastructures\\Events.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\Events.cs",
-              "RelativeToolTip": "EngineZ\\classes\\datastructures\\Events.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T20:42:54.102Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "InputHandler.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\Input\\InputHandler.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\Input\\InputHandler.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\Input\\InputHandler.cs",
               "RelativeToolTip": "EngineZ\\classes\\Input\\InputHandler.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAQwAsAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAQwBMAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T20:40:05.029Z"
+              "WhenOpened": "2025-02-05T20:40:05.029Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 5,
               "Title": "UIInterface.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\interfaces\\UIInterface.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\interfaces\\UIInterface.cs",
@@ -240,11 +159,12 @@
               "RelativeToolTip": "EngineZ\\classes\\interfaces\\UIInterface.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T19:58:09.542Z"
+              "WhenOpened": "2025-02-05T19:58:09.542Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 3,
               "Title": "LocalPlayer.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\LocalPlayer.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\LocalPlayer.cs",
@@ -257,71 +177,215 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 2,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\gameplay\\PlayerController.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\gameplay\\PlayerController.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\gameplay\\PlayerController.cs",
               "RelativeToolTip": "EngineZ\\classes\\gameplay\\PlayerController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwDIAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwDMAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T13:46:33.034Z"
+              "WhenOpened": "2025-02-05T13:46:33.034Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 7,
+              "Title": "WVerticalBox.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WVerticalBox.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T14:05:34.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
+              "RelativeDocumentMoniker": "EngineZ\\Game1.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Game1.cs",
+              "RelativeToolTip": "EngineZ\\Game1.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAowJsAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T22:01:31.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UWWorldGenProgress.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\World\\UWWorldGenProgress.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\UserWidgets\\World\\UWWorldGenProgress.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\World\\UWWorldGenProgress.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\UserWidgets\\World\\UWWorldGenProgress.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T19:12:40.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "World.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\world\\World.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\world\\World.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\world\\World.cs",
               "RelativeToolTip": "EngineZ\\classes\\world\\World.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAALUAAAAAAAAAAAD4v8YAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-05T12:46:13.97Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "DataStructures.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\datastructures\\DataStructures.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
-              "RelativeToolTip": "EngineZ\\classes\\datastructures\\DataStructures.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAA3wDcAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "Widget.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widget.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widget.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widget.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widget.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAvwLMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T00:02:02.213Z",
+              "WhenOpened": "2025-02-05T19:56:58.244Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "WTextBlock.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
-              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwCkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T07:37:47.621Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 0,
               "Title": "Character.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Character.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\Character.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Character.cs",
               "RelativeToolTip": "EngineZ\\classes\\entity\\Character.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAwBQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-05T09:20:59.156Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
+              "Title": "UWTitleScreen.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\UserWidgets\\UWTitleScreen.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAswDIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T14:51:51.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
+              "RelativeDocumentMoniker": "EngineZ\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
+              "RelativeToolTip": "EngineZ\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T22:01:25.539Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Camera.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\cam\\Camera.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\cam\\Camera.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\cam\\Camera.cs",
+              "RelativeToolTip": "EngineZ\\classes\\cam\\Camera.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T13:21:44.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DataStructures.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "RelativeToolTip": "EngineZ\\classes\\datastructures\\DataStructures.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAIwDYAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T00:02:02.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Events.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\Events.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\datastructures\\Events.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\datastructures\\Events.cs",
+              "RelativeToolTip": "EngineZ\\classes\\datastructures\\Events.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T20:42:54.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "WButton.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WButton.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAArwCAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T20:54:29.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "WidgetUtil.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\WidgetUtil.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwBQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T08:19:09.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MusicManager.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\Music\\MusicManager.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\Music\\MusicManager.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\Music\\MusicManager.cs",
+              "RelativeToolTip": "EngineZ\\classes\\Music\\MusicManager.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAvwEkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T19:52:21.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PanelWidget.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\PanelWidget.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwAkAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:33:44.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
               "Title": "Logger.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\Utility\\Logger.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\Utility\\Logger.cs",
@@ -334,19 +398,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Camera.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\cam\\Camera.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\cam\\Camera.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\cam\\Camera.cs",
-              "RelativeToolTip": "EngineZ\\classes\\cam\\Camera.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAYwB0AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "WTextBlock.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
+              "RelativeDocumentMoniker": "EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
+              "RelativeToolTip": "EngineZ\\classes\\UserInterface\\Widgets\\WTextBlock.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwCkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T13:21:44.949Z"
+              "WhenOpened": "2025-02-06T07:37:47.621Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "Lookups.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\lookups\\Lookups.cs",
               "RelativeDocumentMoniker": "EngineZ\\classes\\lookups\\Lookups.cs",
@@ -354,33 +418,7 @@
               "RelativeToolTip": "EngineZ\\classes\\lookups\\Lookups.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAYwDgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T00:01:37.528Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Entity.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
-              "RelativeDocumentMoniker": "EngineZ\\classes\\entity\\Entity.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\classes\\entity\\Entity.cs",
-              "RelativeToolTip": "EngineZ\\classes\\entity\\Entity.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAawCEAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T23:54:09.349Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
-              "RelativeDocumentMoniker": "EngineZ\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\EngineZ\\EngineZ\\Program.cs",
-              "RelativeToolTip": "EngineZ\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T22:01:25.539Z"
+              "WhenOpened": "2025-02-05T00:01:37.528Z"
             }
           ]
         }

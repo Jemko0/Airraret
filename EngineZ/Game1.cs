@@ -5,27 +5,28 @@ using EngineZ.DataStructures;
 using EngineZ.Entities;
 using EngineZ.ID;
 using EngineZ.Input;
+using EngineZ.Music;
 using EngineZ.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace EngineZ
 {
     public class Airraret : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public SpriteBatch _spriteBatch;
         public static Entity[] entities = new Entity[255];
-        private World world;
+        public World world;
         private Camera clientCamera;
         private HUD clientHUD;
-        private PlayerController LocalPlayerController;
+        public PlayerController LocalPlayerController;
         public static SpriteFont gameFont24;
+        public static bool renderWorld;
+        public MusicManager musicManager;
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -38,15 +39,22 @@ namespace EngineZ
             Window.AllowUserResizing = true;
             Window.Title = "lol";
 
-            LocalPlayerController = new PlayerController(this, 0);
-
-            world = new World();
-            world.FillWorld(50);
-
             clientCamera = new Camera();
             base.Initialize();
-
         }
+
+        public void CreatePlayer(Vector2? newPosition)
+        {
+            LocalPlayerController = new PlayerController(this, 0);
+            var player = CreateEntity<Character>(EEntityTypes.Player);
+            LocalPlayerController.Posess(player);
+
+            if(newPosition != null)
+            {
+                player.SetLocation((Vector2)newPosition);
+            }
+        }
+
         #region createDestroy
         public static Entity? CreateEntity<T>(EEntityTypes type) where T : Entity
         {
@@ -90,16 +98,17 @@ namespace EngineZ
         #endregion
         protected override void LoadContent()
         {
+            MusicManager.InitMusic();
+            musicManager = new MusicManager();
+            musicManager.SetNext("Title");
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             gameFont24 = Content.Load<SpriteFont>("Fonts/Andy");
 
             clientHUD = new HUD();
             clientHUD.InitHUD(ref _spriteBatch, ref _graphics);
 
-            Entity b = CreateEntity<Character>(EEntityTypes.Player);
-            b.SetLocation(50, -500);
-
-            LocalPlayerController.Posess(b);
+            HUD.CreateWidget<UWTitleScreen>(clientHUD, new Rectangle(0, 0, 1, 1), EWidgetAlignment.TopLeft);
         }
 
         protected override void Update(GameTime gameTime)
@@ -110,22 +119,22 @@ namespace EngineZ
 
             if(Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                Camera.cameraPosition.Y -= 5;
+                Camera.cameraPosition.Y -= 25;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                Camera.cameraPosition.Y += 5;
+                Camera.cameraPosition.Y += 25;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                Camera.cameraPosition.X += 5;
+                Camera.cameraPosition.X += 25;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                Camera.cameraPosition.X -= 5;
+                Camera.cameraPosition.X -= 25;
             }
 
             base.Update(gameTime);
@@ -151,59 +160,56 @@ namespace EngineZ
                 renderRect = Camera.ScaleRectToDPI(renderRect);
                 _spriteBatch.Draw(entities[i].type.sprite, renderRect, entities[i].type.tint);
             }
-
-            //World Render
-            float scale = Main.GetGame().GraphicsDevice.Viewport.Height / 1080f;
-            float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * scale);
-
-
-            // For Y, we need to consider that positive Y is downward
-            int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
-            int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
-            int endX = startX + Main.GetGame().Window.ClientBounds.Width / World.TILESIZE;
-            int endY = startY + Main.GetGame().Window.ClientBounds.Height / World.TILESIZE;
-
-            // Get screen center
-            float screenCenterX = Main.GetGame().Window.ClientBounds.Width / 2f;
-            float screenCenterY = Main.GetGame().Window.ClientBounds.Height / 2f;
-
-            for (int x = startX; x <= endX; x++)
+            if(renderWorld)
             {
-                for (int y = startY; y <= endY; y++)
+                float scale = Main.GetGame().GraphicsDevice.Viewport.Height / 1080f;
+                float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * scale);
+
+                int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
+                int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
+                int endX = startX + Main.GetGame().Window.ClientBounds.Width / World.TILESIZE;
+                int endY = startY + Main.GetGame().Window.ClientBounds.Height / World.TILESIZE;
+
+                float screenCenterX = Main.GetGame().Window.ClientBounds.Width / 2f;
+                float screenCenterY = Main.GetGame().Window.ClientBounds.Height / 2f;
+
+                for (int x = startX; x < endX; x++)
                 {
-                    Vector2 tilePos = new Vector2(x * World.TILESIZE, y * World.TILESIZE);
-                    
-                    if (World.tiles.ContainsKey(tilePos))
+                    for (int y = startY; y < endY; y++)
                     {
-                        // Calculate position relative to screen center, Y increases downward
-                        float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
-                        float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
+                        Vector2 tilePos = new Vector2(x * World.TILESIZE, y * World.TILESIZE);
 
-                        // Scale the relative position
-                        float scaledX = relativeX * scale;
-                        float scaledY = relativeY * scale;
+                        if (World.tiles.ContainsKey(tilePos))
+                        {
+                            // Calculate position relative to screen center, Y increases downward
+                            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
+                            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
 
-                        Rectangle drawRect = new Rectangle(
-                            (int)(screenCenterX + scaledX),
-                            (int)(screenCenterY + scaledY),
-                            (int)scaledTileSize,
-                            (int)scaledTileSize
-                        );
+                            // Scale the relative position
+                            float scaledX = relativeX * scale;
+                            float scaledY = relativeY * scale;
 
-                        ETileTypes tileType = World.tiles[tilePos];
-                        Tile tileData = TileID.GetTile(tileType);
-                        _spriteBatch.Draw(tileData.sprite, drawRect, Color.White);
+                            Rectangle drawRect = new Rectangle(
+                                (int)(screenCenterX + scaledX),
+                                (int)(screenCenterY + scaledY),
+                                (int)scaledTileSize,
+                                (int)scaledTileSize
+                            );
+
+                            ETileTypes tileType = World.tiles[tilePos];
+                            Tile tileData = TileID.GetTile(tileType);
+
+                            _spriteBatch.Draw(tileData.sprite, drawRect, Color.White);
+                        }
                     }
                 }
             }
 
-            _spriteBatch.DrawString(gameFont24, "test", new Vector2(25, 25), Color.Black);
             _spriteBatch.End();
-            
+
             clientHUD.DrawWidgets();
 
             base.Draw(gameTime);
-
         }
     }
 }
