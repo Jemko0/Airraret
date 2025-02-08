@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EngineZ.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace EngineZ.Events
 {
-    public partial class Mouse
+    public partial class MouseEvent
     {
         public delegate void OnMouseClick(MouseClickEventArgs args);
         public delegate void OnMouseRelease(MouseClickEventArgs args);
@@ -25,6 +26,13 @@ namespace EngineZ.Events
         }
     }
 
-
+    public class WidgetDestroyEventArgs
+    {
+        public Widget destroyedWidget;
+        public WidgetDestroyEventArgs(Widget w)
+        {
+            destroyedWidget = w;
+        }
+    }
     
 }
