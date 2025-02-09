@@ -1,11 +1,10 @@
 ﻿using EngineZ.DataStructures;
+using EngineZ.RNGenerator;
 using EngineZ.Utility;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EngineZ.classes.world
@@ -44,7 +43,8 @@ namespace EngineZ.classes.world
         public void GenFillWorld()
         {
             tasks.Add(new WGT_Reset("reset"));
-            tasks.Add(new WGT_Terrain("fill"));
+            tasks.Add(new WGT_Terrain("terrain"));
+            tasks.Add(new WGT_Caves("caves"));
             tasks.Add(new WGT_FindSpawn("spawn"));
             tasks.Add(new WGT_FinalizeLightTiles("light"));
         }
@@ -92,12 +92,17 @@ namespace EngineZ.classes.world
 
         public static bool IsTileExposedToAir(int xWorld, int yWorld)
         {
-            bool b1 = IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
-            bool b2 = IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
-            bool b3 = IsValidTile(xWorld, yWorld + World.TILESIZE); //TOP
-            bool b4 = IsValidTile(xWorld, yWorld - World.TILESIZE); //BOTTOM
+            bool b1 = !IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
+            bool b2 = !IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
+            bool b3 = !IsValidTile(xWorld, yWorld + World.TILESIZE); //TOP
+            bool b4 = !IsValidTile(xWorld, yWorld - World.TILESIZE); //BOTTOM
 
             return b1 || b2 || b3 || b4;
+        }
+
+        public static bool IsTileExposedToAir(Vector2 pos)
+        {
+            return IsTileExposedToAir((int)pos.X, (int)pos.Y);
         }
 
         public static void SetTile(int xWorld, int yWorld, ETileTypes type)
@@ -107,7 +112,42 @@ namespace EngineZ.classes.world
             {
                 tiles[k] = type;
             }
+
+            UpdateLighting(k, type == ETileTypes.Air? 16 : 0);
+            UpdateTileFramesAt((int)k.X, (int)k.Y, ID.TileID.GetTile(type));
         }
+
+        public static void CreateHole(int xWorld, int yWorld, int size)
+        {
+            int x = -size;
+            int y = 0;
+
+            while(x < size)
+            {
+                while (y < size - Math.Abs(x))
+                {
+                    SetTile(xWorld + x * TILESIZE, yWorld + y * TILESIZE, ETileTypes.Air);
+                    y++;
+                }
+                x++;
+                y = 0;
+            }
+
+            x = -size;
+            y = 0;
+
+            while (x < size)
+            {
+                while (y < size - Math.Abs(x))
+                {
+                    SetTile(xWorld + x * TILESIZE, yWorld - y * TILESIZE, ETileTypes.Air);
+                    y++;
+                }
+                x++;
+                y = 0;
+            }
+        }
+
 
         public static Rectangle GetTileFrame(int xWorld, int yWorld, Tile tileData)
         {
@@ -258,16 +298,13 @@ namespace EngineZ.classes.world
 
         public static void UpdateLighting(Vector2 position, int lightLevel)
         {
-            // Don't process if light level is 0 or if the new light level would be lower
             if (lightLevel <= 0 || (lightMap.ContainsKey(position) && lightMap[position] >= lightLevel))
             {
                 return;
             }
 
-            // Update current tile's light level
             lightMap[position] = lightLevel;
             
-            // Spread light to neighboring tiles with decreased intensity
             Vector2[] neighbors = new Vector2[]
             {
                 new Vector2(position.X + TILESIZE, position.Y),     // Right
@@ -276,15 +313,12 @@ namespace EngineZ.classes.world
                 new Vector2(position.X, position.Y - TILESIZE),     // Up
             };
 
-            // Calculate new light level - less reduction when there are more solid neighbors
             int newLight = lightLevel - 1;
             
-            // Propagate to neighbors
             foreach (Vector2 neighbor in neighbors)
             {
                 if (tiles.ContainsKey(neighbor))
                 {
-                    // Air propagates light better than solid blocks
                     int neighborNewLight = tiles[neighbor] == ETileTypes.Air || !tiles.ContainsKey(neighbor) ? newLight : newLight - 1;
                     UpdateLighting(neighbor, neighborNewLight);
                 }
@@ -298,79 +332,6 @@ namespace EngineZ.classes.world
                 return lightMap[position];
             }
             return 0;
-        }
-
-        public static void RecalculateLightingAroundPoint(Vector2 position, int radius = 32)
-        {
-            HashSet<Vector2> lightSourcePositions = new HashSet<Vector2>();
-
-            // First, clear lighting in the affected area
-            for (int x = -radius; x <= radius; x += TILESIZE)
-            {
-                for (int y = -radius; y <= radius; y += TILESIZE)
-                {
-                    Vector2 checkPos = new Vector2(position.X + x, position.Y + y);
-                    if (lightMap.ContainsKey(checkPos))
-                    {
-                        lightMap.Remove(checkPos);
-                    }
-
-                    // If this position is air or doesn't exist (void), it's a natural light source
-                    if (!tiles.ContainsKey(checkPos) || tiles[checkPos] == ETileTypes.Air)
-                    {
-                        lightSourcePositions.Add(checkPos);
-                    }
-                    // If it's a solid tile but adjacent to air, add the adjacent air positions as light sources
-                    else
-                    {
-                        Vector2[] neighbors = new Vector2[]
-                        {
-                            new Vector2(checkPos.X + TILESIZE, checkPos.Y),  // Right
-                            new Vector2(checkPos.X - TILESIZE, checkPos.Y),  // Left
-                            new Vector2(checkPos.X, checkPos.Y + TILESIZE),  // Down
-                            new Vector2(checkPos.X, checkPos.Y - TILESIZE)   // Up
-                        };
-
-                        foreach (Vector2 neighbor in neighbors)
-                        {
-                            if (!tiles.ContainsKey(neighbor) || tiles[neighbor] == ETileTypes.Air)
-                            {
-                                lightSourcePositions.Add(neighbor);
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Apply natural lighting from air/void (always intensity 16)
-            foreach (Vector2 source in lightSourcePositions)
-            {
-                UpdateLighting(source, 16);
-            }
-
-            // Apply artificial lighting from light sources within radius
-            foreach (var lightSource in lightSources)
-            {
-                if (Vector2.Distance(lightSource.Key, position) <= radius)
-                {
-                    UpdateLighting(lightSource.Key, lightSource.Value);
-                }
-            }
-        }
-
-        public static void AddLightSource(Vector2 position, int intensity)
-        {
-            lightSources[position] = intensity;
-            RecalculateLightingAroundPoint(position);
-        }
-
-        public static void RemoveLightSource(Vector2 position)
-        {
-            if (lightSources.ContainsKey(position))
-            {
-                lightSources.Remove(position);
-                RecalculateLightingAroundPoint(position);
-            }
         }
     }
 
@@ -468,21 +429,13 @@ namespace EngineZ.classes.world
                 int surfaceTileY = CalcSurface(x, wparams, noise);
                 
                 World.worldSurfaceTiles.Add(surfaceTileY);
+
                 ETileTypes tileType = ETileTypes.Air;
 
                 for (int y = surfaceTileY; y > 0; y--)
                 {
-                    noise.SetSeed(caveSeed);
-                    noise.SetFrequency(0.031f);
-                    noise.SetCellularReturnType(FastNoiseLite.CellularReturnType.Distance2Add);
-                    noise.SetFractalGain(3.7425f);
-                    noise.SetFractalOctaves(1);
-                    float caveVal = noise.GetNoise(x, y);
-                    if(caveVal > -0.25)
-                    {
-                        tileType = PickType(x, y, wparams);
-                        World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
-                    }
+                    tileType = PickType(x, y, wparams);
+                    World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
                     
                 }
 
@@ -529,6 +482,41 @@ namespace EngineZ.classes.world
         }
     }
 
+    public class WGT_Caves : WorldGenTask
+    {
+        public WGT_Caves(string identifier) : base(identifier)
+        {
+        }
+
+        public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
+        {
+            int caveAmount = wparams.maxTilesX + wparams.maxTilesY / 3;
+
+            for(int i = 0; i < caveAmount; i++)
+            {
+                int seedOffset = (int)RNG.GetPseudoRandomFloat(16 - wparams.seed + i * 32.01f) * ushort.MaxValue;
+                float xPercentage = RNG.GetPseudoRandomFloat(wparams.seed + seedOffset + i);
+
+                seedOffset = (int)RNG.GetPseudoRandomFloat(wparams.seed * 0.3f - 1412 - i * 15.3f) * ushort.MaxValue;
+                float yPercentage = RNG.GetPseudoRandomFloat(wparams.seed + seedOffset + i);
+
+                int caveX = (int)(wparams.maxTilesX * xPercentage);
+                int caveY = (int)(wparams.maxTilesY * yPercentage);
+
+                caveX *= World.TILESIZE;
+                caveY *= World.TILESIZE;
+
+                int caveSize = (int)(RNG.GetPseudoRandomFloat(wparams.seed - i * 11.04f) * 9.01f);
+
+                Logger.Log("afasf", caveX, caveY);
+
+                World.CreateHole(caveX, caveY, caveSize);
+            }
+
+            World.CompleteCurrent();
+        }
+    }
+
     public class WGT_FindSpawn : WorldGenTask
     {
         public WGT_FindSpawn(string identifier) : base(identifier)
@@ -560,38 +548,20 @@ namespace EngineZ.classes.world
 
         public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
         {
-            World.lightMap.Clear();
-
-            // First pass: Set initial light values
-            foreach (var tile in World.tiles)
+            foreach(var tile in World.tiles)
             {
-                Vector2 pos = tile.Key;
-                int tileX = (int)(pos.X / World.TILESIZE);
-                float surfaceHeight = (float)World.worldSurfaceTiles[tileX];
-                float tileY = -pos.Y / World.TILESIZE;  // Convert to positive Y for comparison
+                if (World.IsTileExposedToAir(tile.Key))
+                {
+                    World.UpdateLighting(tile.Key, 16);
+                }
 
-                // If it's air or above surface, it's a light source
-                if (tile.Value == ETileTypes.Air || tileY >= surfaceHeight)
+                progress?.Report(new WorldGenProgress()
                 {
-                    World.lightMap[pos] = 16;
-                }
-                else
-                {
-                    World.lightMap[pos] = 0;
-                }
+                    CurrentTask = "Lighting Tiles...",
+                    PercentComplete = (tile.Key.X / World.TILESIZE) / wparams.maxTilesX,
+                });
             }
-
-            // Second pass: Propagate light
-            foreach (var tile in World.tiles)
-            {
-                Vector2 pos = tile.Key;
-                if (World.lightMap[pos] == 16)
-                {
-                    // Use existing UpdateLighting method for light propagation
-                    World.UpdateLighting(pos, 16);
-                }
-            }
-
+            
             World.CompleteCurrent();
         }
     }

@@ -48,8 +48,8 @@ namespace EngineZ.UI
             {
                 var newParams = new WorldGenParams()
                 {
-                    maxTilesX = 5000,
-                    maxTilesY = 2000,
+                    maxTilesX = 500,
+                    maxTilesY = 500,
                     seed = 0,
                 };
 

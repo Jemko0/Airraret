@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineZ.DataStructures
 {
@@ -83,5 +78,11 @@ namespace EngineZ.DataStructures
         {
             return (X.GetHashCode() * 397) ^ Y.GetHashCode();
         }
+    }
+
+    public enum ELightingMethod
+    {
+        Basic = 0,
+
     }
 }
