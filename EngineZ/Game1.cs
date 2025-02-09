@@ -27,7 +27,7 @@ namespace EngineZ
         public static SpriteFont gameFont24;
         public static bool renderWorld;
         public MusicManager musicManager;
-
+        public Texture2D blackTx;
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -41,7 +41,10 @@ namespace EngineZ
         {
             Window.AllowUserResizing = true;
             Window.Title = "Airarret";
-            
+
+            blackTx = new Texture2D(_graphics.GraphicsDevice, 1, 1);
+            blackTx.SetData(new Color[] { Color.Black });
+
             clientCamera = new Camera();
             base.Initialize();
         }
@@ -122,22 +125,22 @@ namespace EngineZ
 
             if(Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                Camera.cameraPosition.Y -= 25;
+                Camera.cameraPosition.Y -= 64;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                Camera.cameraPosition.Y += 25;
+                Camera.cameraPosition.Y += 64;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                Camera.cameraPosition.X += 25;
+                Camera.cameraPosition.X += 64;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                Camera.cameraPosition.X -= 25;
+                Camera.cameraPosition.X -= 64;
             }
 
             base.Update(gameTime);
@@ -188,15 +191,27 @@ namespace EngineZ
                                 continue;
                             }
 
-                            Tile tileData = TileID.GetTile(tileType);
-                            Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
-
-                            // Apply lighting
                             int lightLevel = World.GetLightLevel(tilePos);
-                            float lightIntensity = lightLevel / 15f; // Assuming max light level is 16
+
+                            if (lightLevel == 0)
+                            {
+                                _spriteBatch.Draw(blackTx, drawRect, Color.White);
+                                continue;
+                            }
+
+                            Tile tileData = TileID.GetTile(tileType);
+
+                            float lightIntensity = lightLevel / 16f;
                             Color lightColor = tileData.tint * lightIntensity;
                             lightColor.A = 0xff;
-                            _spriteBatch.Draw(tileData.sprite, drawRect, frame, lightColor);
+
+                            if (!World.tileFrames.ContainsKey(tilePos))
+                            {
+                                Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
+                                World.tileFrames[tilePos] = frame;
+                            }
+
+                            _spriteBatch.Draw(tileData.sprite, drawRect, World.tileFrames[tilePos], lightColor);
                         }
                     }
                 }

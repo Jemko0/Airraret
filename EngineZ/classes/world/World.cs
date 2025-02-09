@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +30,7 @@ namespace EngineZ.classes.world
 
         public static List<WorldGenTask> tasks = new List<WorldGenTask>();
         public static Dictionary<Vector2, int> lightMap = new Dictionary<Vector2, int>();
+        public static Dictionary<Vector2, Rectangle> tileFrames = new Dictionary<Vector2, Rectangle>();
         public Progress<WorldGenProgress> currentTaskProgress;
         private static TaskCompletionSource<bool> currentCompletionSource;
         
@@ -223,6 +225,28 @@ namespace EngineZ.classes.world
             return tileFrame;
         }
 
+        public static void UpdateTileFramesAt(int xWorld, int yWorld, Tile tileData)
+        {
+            //TileData = data after the update already happened meaning if tile destroyed -> air
+            IntVector2[] neighborLocations = new IntVector2[]
+            {
+                new IntVector2(xWorld + TILESIZE, yWorld),
+                new IntVector2(xWorld - TILESIZE, yWorld),
+                new IntVector2(xWorld, yWorld + TILESIZE),
+                new IntVector2(xWorld, yWorld - TILESIZE),
+            };
+
+            Rectangle frameR = GetTileFrame(neighborLocations[0].X, neighborLocations[0].Y, tileData);
+            Rectangle frameL = GetTileFrame(neighborLocations[1].X, neighborLocations[1].Y, tileData);
+            Rectangle frameT = GetTileFrame(neighborLocations[2].X, neighborLocations[2].Y, tileData);
+            Rectangle frameB = GetTileFrame(neighborLocations[3].X, neighborLocations[3].Y, tileData);
+
+            tileFrames[new Vector2(neighborLocations[0].X, neighborLocations[0].Y)] = frameR;
+            tileFrames[new Vector2(neighborLocations[1].X, neighborLocations[1].Y)] = frameL;
+            tileFrames[new Vector2(neighborLocations[2].X, neighborLocations[2].Y)] = frameT;
+            tileFrames[new Vector2(neighborLocations[3].X, neighborLocations[3].Y)] = frameB;
+        }
+
         public static bool IsValidTile(int xWorld, int yWorld)
         {
             if(tiles.ContainsKey(new Vector2(xWorld, yWorld)))
@@ -251,16 +275,6 @@ namespace EngineZ.classes.world
                 new Vector2(position.X, position.Y + TILESIZE),     // Down
                 new Vector2(position.X, position.Y - TILESIZE),     // Up
             };
-
-            // Count solid neighbors
-            int solidNeighbors = 0;
-            foreach (Vector2 neighbor in neighbors)
-            {
-                if (tiles.ContainsKey(neighbor) && tiles[neighbor] != ETileTypes.Air)
-                {
-                    solidNeighbors++;
-                }
-            }
 
             // Calculate new light level - less reduction when there are more solid neighbors
             int newLight = lightLevel - 1;
@@ -394,6 +408,8 @@ namespace EngineZ.classes.world
             World.worldSurfaceTiles.Clear();
             World.tiles.Clear();
             World.worldSpawn = new Vector2(0, 0);
+            World.tileFrames.Clear();
+            World.lightMap.Clear();
 
             progress?.Report(new WorldGenProgress()
             {
@@ -445,19 +461,29 @@ namespace EngineZ.classes.world
         public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
         {
             int surfaceLevel = wparams.maxTilesY / 3;
-
+            FastNoiseLite noise = new FastNoiseLite();
+            int caveSeed = (int)(wparams.seed + (5415.0325 / 23 * 1.42) + (wparams.seed - 523));
             for (int x = 0; x < wparams.maxTilesX; x++)
             {
-                int surfaceTileY = (wparams.maxTilesY - (int)(Math.Sin(x * 0.05) * 24));
+                int surfaceTileY = CalcSurface(x, wparams, noise);
+                
                 World.worldSurfaceTiles.Add(surfaceTileY);
-
                 ETileTypes tileType = ETileTypes.Air;
 
                 for (int y = surfaceTileY; y > 0; y--)
                 {
-                    tileType = PickType(x, y, wparams);
-
-                    World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
+                    noise.SetSeed(caveSeed);
+                    noise.SetFrequency(0.031f);
+                    noise.SetCellularReturnType(FastNoiseLite.CellularReturnType.Distance2Add);
+                    noise.SetFractalGain(3.7425f);
+                    noise.SetFractalOctaves(1);
+                    float caveVal = noise.GetNoise(x, y);
+                    if(caveVal > -0.25)
+                    {
+                        tileType = PickType(x, y, wparams);
+                        World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
+                    }
+                    
                 }
 
                 progress?.Report(new WorldGenProgress()
@@ -467,6 +493,30 @@ namespace EngineZ.classes.world
                 });
             }
             World.CompleteCurrent();
+        }
+
+        public int CalcSurface(int x, WorldGenParams wparams, FastNoiseLite noise)
+        {
+            noise.SetSeed(wparams.seed);
+            noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            noise.SetFractalType(FastNoiseLite.FractalType.FBm);
+            noise.SetFractalOctaves(4);
+            noise.SetFractalLacunarity(1.819654321f);
+            noise.SetFrequency(0.01245f);
+
+            float noise1 = (noise.GetNoise(x, 0)) * 5.11f;
+
+            noise.SetSeed((int)(wparams.seed + 215 * 0.52134));
+            noise.SetFractalType(FastNoiseLite.FractalType.FBm);
+            noise.SetFractalOctaves(3);
+            noise.SetFractalLacunarity(1.5f);
+            noise.SetFrequency(0.01134f);
+
+            float noise2 = (noise.GetNoise(x, 0)) * 8f;
+
+
+            float finalVal = noise1 * noise2;
+            return wparams.maxTilesY + (int)finalVal;
         }
 
         public ETileTypes PickType(int x, int y, WorldGenParams wparams)
@@ -510,23 +560,36 @@ namespace EngineZ.classes.world
 
         public override async Task Run(IProgress<WorldGenProgress> progress, WorldGenParams wparams)
         {
-            // Clear existing light map
             World.lightMap.Clear();
 
-            // Initialize surface tiles with maximum light
-            for (int x = 0; x < wparams.maxTilesX; x++)
+            // First pass: Set initial light values
+            foreach (var tile in World.tiles)
             {
-                float surfaceHeight = World.GetSurfaceHeightAtIdx(x);
-                Vector2 surfacePos = new Vector2(x * World.TILESIZE, -surfaceHeight * World.TILESIZE);
-                
-                // Update lighting starting from surface
-                World.UpdateLighting(surfacePos, 16);
+                Vector2 pos = tile.Key;
+                int tileX = (int)(pos.X / World.TILESIZE);
+                float surfaceHeight = (float)World.worldSurfaceTiles[tileX];
+                float tileY = -pos.Y / World.TILESIZE;  // Convert to positive Y for comparison
 
-                progress?.Report(new WorldGenProgress()
+                // If it's air or above surface, it's a light source
+                if (tile.Value == ETileTypes.Air || tileY >= surfaceHeight)
                 {
-                    CurrentTask = "Lighting Tiles",
-                    PercentComplete = (float)x / wparams.maxTilesX,
-                });
+                    World.lightMap[pos] = 16;
+                }
+                else
+                {
+                    World.lightMap[pos] = 0;
+                }
+            }
+
+            // Second pass: Propagate light
+            foreach (var tile in World.tiles)
+            {
+                Vector2 pos = tile.Key;
+                if (World.lightMap[pos] == 16)
+                {
+                    // Use existing UpdateLighting method for light propagation
+                    World.UpdateLighting(pos, 16);
+                }
             }
 
             World.CompleteCurrent();
