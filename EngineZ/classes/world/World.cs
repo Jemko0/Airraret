@@ -40,7 +40,6 @@ namespace EngineZ.classes.world
         public event TaskProgressChanged taskProgressChanged;
         public static List<float?> worldSurfaceTiles = new List<float?>();
         public static Vector2 worldSpawn;
-        public static Dictionary<Vector2, int> lightSources = new Dictionary<Vector2, int>();
 
         //Initialize Tasks
         public void GenFillWorld()
