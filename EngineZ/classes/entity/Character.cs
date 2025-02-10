@@ -33,13 +33,13 @@ namespace EngineZ.Entities
             Vector2 tilePos = Camera.ScreenToTile(args.X, args.Y);
             if (World.tiles.ContainsKey(tilePos))
             {
-                World.CreateHole((int)tilePos.X, (int)tilePos.Y, 16);
-                //World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Air);
-                Tile tileData = TileID.GetTile(World.tiles[tilePos]);
+                World.SetWall((int)tilePos.X, (int)tilePos.Y, EWallTypes.Dirt);
+                
+                /*Tile tileData = TileID.GetTile(World.tiles[tilePos]);
 
                 World.UpdateTileFramesAt((int)tilePos.X, (int)tilePos.Y, tileData);
 
-                World.UpdateLighting(tilePos, 16);
+                World.UpdateLighting(tilePos, 16);*/
             }
         }
 

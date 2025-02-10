@@ -153,8 +153,7 @@ namespace EngineZ
 
             if(renderWorld)
             {
-                float scale = HUD.DPIScale;
-                float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * scale);
+                float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
 
                 int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
                 int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
@@ -169,14 +168,18 @@ namespace EngineZ
                     for (int y = startY; y < endY; y++)
                     {
                         Vector2 tilePos = new Vector2(x * World.TILESIZE, y * World.TILESIZE);
-
-                        if (World.tiles.ContainsKey(tilePos))
+                        bool renderTile = World.tiles.ContainsKey(tilePos);
+                        if(renderTile)
+                        {
+                            renderTile = World.tiles[tilePos] != ETileTypes.Air;
+                        }
+                        if (renderTile)
                         {
                             float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
                             float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
 
-                            float scaledX = relativeX * scale;
-                            float scaledY = relativeY * scale;
+                            float scaledX = relativeX * HUD.DPIScale;
+                            float scaledY = relativeY * HUD.DPIScale;
 
                             Rectangle drawRect = new Rectangle(
                                 (int)(screenCenterX + scaledX),
@@ -199,9 +202,9 @@ namespace EngineZ
                                 continue;
                             }
 
-                            Tile tileData = TileID.GetTile(tileType);
-
+                            
                             float lightIntensity = lightLevel / 16f;
+                            Tile tileData = TileID.GetTile(tileType);
                             Color lightColor = tileData.tint * lightIntensity;
                             lightColor.A = 0xff;
 
@@ -212,6 +215,46 @@ namespace EngineZ
                             }
 
                             _spriteBatch.Draw(tileData.sprite, drawRect, World.tileFrames[tilePos], lightColor);
+                        }
+                        else
+                        {
+                            if(World.walls.ContainsKey(tilePos))
+                            {
+                                float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
+                                float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
+
+                                float scaledX = relativeX * HUD.DPIScale;
+                                float scaledY = relativeY * HUD.DPIScale;
+
+                                Rectangle drawRect = new Rectangle(
+                                    (int)(screenCenterX + scaledX),
+                                    (int)(screenCenterY + scaledY),
+                                    (int)scaledTileSize,
+                                    (int)scaledTileSize
+                                );
+
+                                EWallTypes wallType = World.walls[tilePos];
+
+                                if (wallType == EWallTypes.Air)
+                                {
+                                    continue;
+                                }
+
+                                int lightLevel = World.GetLightLevel(tilePos);
+
+                                float lightIntensity = lightLevel / 16f;
+                                Wall wallData = WallID.GetWall(wallType);
+                                Color lightColor = wallData.tint * lightIntensity;
+                                lightColor.A = 0xff;
+
+                                if (!World.wallFrames.ContainsKey(tilePos))
+                                {
+                                    Rectangle frame = World.GetWallFrame((int)tilePos.X, (int)tilePos.Y, wallData);
+                                    World.wallFrames[tilePos] = frame;
+                                }
+
+                                _spriteBatch.Draw(wallData.sprite, drawRect, World.wallFrames[tilePos], lightColor);
+                            }
                         }
                     }
                 }

@@ -20,6 +20,12 @@ namespace EngineZ.DataStructures
         Grass,
     }
 
+    public enum EWallTypes
+    {
+        Air,
+        Dirt,
+    }
+
     public struct EntityDef
     {
         public EEntityTypes type;
@@ -32,6 +38,14 @@ namespace EngineZ.DataStructures
     {
         public bool valid;
         public bool collide;
+        public Texture2D sprite;
+        public int frameSize;
+        public int framePadding;
+        public Color tint;
+    }
+
+    public struct Wall
+    {
         public Texture2D sprite;
         public int frameSize;
         public int framePadding;
@@ -67,6 +81,12 @@ namespace EngineZ.DataStructures
         {
             this.X = x;
             this.Y = y;
+        }
+
+        public IntVector2(Vector2 v)
+        {
+            this.X = (int)v.X;
+            this.Y = (int)v.Y;
         }
 
         public bool Equals(IntVector2 x, IntVector2 y)

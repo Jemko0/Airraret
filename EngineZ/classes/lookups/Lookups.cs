@@ -55,15 +55,37 @@ namespace EngineZ.ID
                     break;
 
                 case ETileTypes.Dirt:
-                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/dirt");
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/dirt");
                     break;
 
                 case ETileTypes.Grass:
-                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/grass");
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/grass");
                     break;
             }
 
             return t;
+        }
+    }
+
+    public static class WallID
+    {
+        public static Wall GetWall(EWallTypes type)
+        {
+            Wall wall = new Wall();
+            wall.framePadding = 2;
+            wall.frameSize = 16;
+            wall.tint = Color.White;
+            switch(type)
+            {
+                case EWallTypes.Air:
+                    break;
+
+                case EWallTypes.Dirt:
+                    wall.sprite = Main.GetGame().Content.Load<Texture2D>("textures/wall/dirt");
+                    break;
+            }
+
+            return wall;
         }
     }
 }

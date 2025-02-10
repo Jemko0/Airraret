@@ -10,7 +10,7 @@ namespace EngineZ.classes.gameplay
         public int id;
         public string name;
         private Entity? controlledEntity;
-        public bool cameraAttachToEntity = false;
+        public bool cameraAttachToEntity = true;
         public PlayerController(Game game, int id) : base(game)
         {
             this.id = id;
