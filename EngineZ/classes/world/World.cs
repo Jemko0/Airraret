@@ -94,10 +94,10 @@ namespace EngineZ.classes.world
 
         public static bool IsTileExposedToAir(int xWorld, int yWorld)
         {
-            bool b1 = !IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
-            bool b2 = !IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
-            bool b3 = !IsValidTile(xWorld, yWorld + World.TILESIZE); //TOP
-            bool b4 = !IsValidTile(xWorld, yWorld - World.TILESIZE); //BOTTOM
+            bool b1 = !IsTileOrWall(xWorld + World.TILESIZE, yWorld); //RIGHT
+            bool b2 = !IsTileOrWall(xWorld - World.TILESIZE, yWorld); //LEFT
+            bool b3 = !IsTileOrWall(xWorld, yWorld + World.TILESIZE); //TOP
+            bool b4 = !IsTileOrWall(xWorld, yWorld - World.TILESIZE); //BOTTOM
 
             return b1 || b2 || b3 || b4;
         }
@@ -114,8 +114,12 @@ namespace EngineZ.classes.world
             {
                 tiles[k] = type;
             }
+            else
+            {
+                tiles.Add(k, type);
+            }
 
-            UpdateLighting(k, type == ETileTypes.Air ? 16 : 0);
+            //UpdateLighting(k, type == ETileTypes.Air ? 16 : 0);
             UpdateTileFramesAt((int)k.X, (int)k.Y, ID.TileID.GetTile(type));
         }
 
@@ -141,7 +145,7 @@ namespace EngineZ.classes.world
                 }
             }
 
-            UpdateLighting(k, 0);
+            //UpdateLighting(k, 0);
             UpdateWallFramesAt((int)k.X, (int)k.Y, ID.WallID.GetWall(type));
         }
 
@@ -154,7 +158,12 @@ namespace EngineZ.classes.world
             {
                 while (y < size - Math.Abs(x))
                 {
-                    tiles[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = ETileTypes.Air;
+                    if(x != 3)
+                    {
+                        tiles[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = ETileTypes.Air;
+                    }
+                    
+                    walls[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = EWallTypes.Dirt;
                     y++;
                 }
                 x++;
@@ -168,7 +177,8 @@ namespace EngineZ.classes.world
             {
                 while (y < size - Math.Abs(x))
                 {
-                    tiles[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = ETileTypes.Air;
+                    tiles[new Vector2(xWorld + x * TILESIZE, yWorld - y * TILESIZE)] = ETileTypes.Air;
+                    walls[new Vector2(xWorld + x * TILESIZE, yWorld - y * TILESIZE)] = EWallTypes.Dirt;
                     y++;
                 }
                 x++;
@@ -183,7 +193,7 @@ namespace EngineZ.classes.world
 
             bool r = IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
             bool l = IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
-            bool t = IsValidTile(xWorld, yWorld - World.TILESIZE); //TOP
+            bool t = IsValidTile(xWorld, yWorld - World.TILESIZE) && !tileData.frameIgnoreTop; //TOP
             bool b = IsValidTile(xWorld, yWorld + World.TILESIZE); //BOTTOM
 
             int frameSlot = tileData.frameSize + tileData.framePadding;
@@ -486,42 +496,9 @@ namespace EngineZ.classes.world
             return IsValidTile(pos) || IsValidWall(pos);
         }
 
-        public static void UpdateLighting(Vector2 position, int lightLevel)
+        public static bool IsTileOrWall(int xW, int yW)
         {
-            if (lightLevel <= 0 || lightMap.ContainsKey(position) && lightMap[position] >= lightLevel)
-            {
-                return;
-            }
-
-            lightMap[position] = lightLevel;
-            
-            Vector2[] neighbors = new Vector2[]
-            {
-                new Vector2(position.X + TILESIZE, position.Y),     // Right
-                new Vector2(position.X - TILESIZE, position.Y),     // Left
-                new Vector2(position.X, position.Y + TILESIZE),     // Down
-                new Vector2(position.X, position.Y - TILESIZE),     // Up
-            };
-
-            int newLight = lightLevel - 1;
-            
-            foreach (Vector2 neighbor in neighbors)
-            {
-                if (tiles.ContainsKey(neighbor))
-                {
-                    int neighborNewLight = !IsValidTile(neighbor) && !IsValidWall(neighbor)? 16 : newLight -1;
-                    UpdateLighting(neighbor, neighborNewLight);
-                }
-            }
-        }
-
-        public static int GetLightLevel(Vector2 position)
-        {
-            if (lightMap.ContainsKey(position))
-            {
-                return lightMap[position];
-            }
-            return 0;
+            return IsValidTile(new Vector2(xW, yW)) || IsValidWall(new Vector2(xW, yW));
         }
     }
 
@@ -774,7 +751,7 @@ namespace EngineZ.classes.world
             {
                 if (World.IsTileExposedToAir(tile.Key))
                 {
-                    World.UpdateLighting(tile.Key, 15);
+                    Lighting.UpdateLighting(tile.Key);
                 }
 
                 progress?.Report(new WorldGenProgress()

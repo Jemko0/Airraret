@@ -47,6 +47,11 @@ namespace EngineZ.ID
             t.valid = true;
             t.collide = true;
             t.tint = Color.White;
+            t.light = 0x00;
+            t.blockLight = 0x03;
+            t.useTileFrame = true;
+            t.hideWall = true;
+            t.frameIgnoreTop = false;
 
             switch (type)
             {
@@ -60,6 +65,14 @@ namespace EngineZ.ID
 
                 case ETileTypes.Grass:
                     t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/grass");
+                    break;
+
+                case ETileTypes.Torch:
+                    t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/torch");
+                    t.blockLight = 0;
+                    t.light = 16;
+                    t.hideWall = false;
+                    t.frameIgnoreTop = true;
                     break;
             }
 

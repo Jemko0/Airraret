@@ -18,6 +18,7 @@ namespace EngineZ.DataStructures
         Dirt,
         Stone,
         Grass,
+        Torch,
     }
 
     public enum EWallTypes
@@ -39,9 +40,22 @@ namespace EngineZ.DataStructures
         public bool valid;
         public bool collide;
         public Texture2D sprite;
+        public bool useTileFrame;
+        public bool hideWall;
         public int frameSize;
+        public bool frameIgnoreTop;
         public int framePadding;
         public Color tint;
+
+        /// <summary>
+        /// How much light does this tile emit
+        /// </summary>
+        public byte light;
+
+        /// <summary>
+        /// how much light does this tile block
+        /// </summary>
+        public byte blockLight;
     }
 
     public struct Wall

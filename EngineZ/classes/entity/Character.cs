@@ -8,6 +8,7 @@ using EngineZ.UI;
 using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace EngineZ.Entities
@@ -31,15 +32,22 @@ namespace EngineZ.Entities
         private void MouseClickedOnWorld(Events.MouseEvent.MouseClickEventArgs args)
         {
             Vector2 tilePos = Camera.ScreenToTile(args.X, args.Y);
-            if (World.tiles.ContainsKey(tilePos))
+
+            if(Keyboard.GetState().IsKeyDown(Keys.T))
             {
-                World.SetWall((int)tilePos.X, (int)tilePos.Y, EWallTypes.Dirt);
-                
-                /*Tile tileData = TileID.GetTile(World.tiles[tilePos]);
+                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Dirt);
+            }
+            else
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    World.SetWall((int)tilePos.X, (int)tilePos.Y, EWallTypes.Dirt);
+                }
+            }
 
-                World.UpdateTileFramesAt((int)tilePos.X, (int)tilePos.Y, tileData);
-
-                World.UpdateLighting(tilePos, 16);*/
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Torch);
             }
         }
 

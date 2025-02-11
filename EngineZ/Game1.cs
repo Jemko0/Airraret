@@ -153,109 +153,21 @@ namespace EngineZ
 
             if(renderWorld)
             {
-                float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
-
                 int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
                 int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
                 int endX = startX + Window.ClientBounds.Width / World.TILESIZE;
                 int endY = startY + Window.ClientBounds.Height / World.TILESIZE;
-
-                float screenCenterX = Window.ClientBounds.Width / 2f;
-                float screenCenterY = Window.ClientBounds.Height / 2f;
 
                 for (int x = startX; x < endX; x++)
                 {
                     for (int y = startY; y < endY; y++)
                     {
                         Vector2 tilePos = new Vector2(x * World.TILESIZE, y * World.TILESIZE);
-                        bool renderTile = World.tiles.ContainsKey(tilePos);
-                        if(renderTile)
-                        {
-                            renderTile = World.tiles[tilePos] != ETileTypes.Air;
-                        }
-                        if (renderTile)
-                        {
-                            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
-                            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
 
-                            float scaledX = relativeX * HUD.DPIScale;
-                            float scaledY = relativeY * HUD.DPIScale;
-
-                            Rectangle drawRect = new Rectangle(
-                                (int)(screenCenterX + scaledX),
-                                (int)(screenCenterY + scaledY),
-                                (int)scaledTileSize,
-                                (int)scaledTileSize
-                            );
-
-                            ETileTypes tileType = World.tiles[tilePos];
-                            if(tileType == ETileTypes.Air)
-                            {
-                                continue;
-                            }
-
-                            int lightLevel = World.GetLightLevel(tilePos);
-
-                            if (lightLevel == 0)
-                            {
-                                _spriteBatch.Draw(blackTx, drawRect, Color.White);
-                                continue;
-                            }
-
-                            
-                            float lightIntensity = lightLevel / 16f;
-                            Tile tileData = TileID.GetTile(tileType);
-                            Color lightColor = tileData.tint * lightIntensity;
-                            lightColor.A = 0xff;
-
-                            if (!World.tileFrames.ContainsKey(tilePos))
-                            {
-                                Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
-                                World.tileFrames[tilePos] = frame;
-                            }
-
-                            _spriteBatch.Draw(tileData.sprite, drawRect, World.tileFrames[tilePos], lightColor);
-                        }
-                        else
-                        {
-                            if(World.walls.ContainsKey(tilePos))
-                            {
-                                float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
-                                float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
-
-                                float scaledX = relativeX * HUD.DPIScale;
-                                float scaledY = relativeY * HUD.DPIScale;
-
-                                Rectangle drawRect = new Rectangle(
-                                    (int)(screenCenterX + scaledX),
-                                    (int)(screenCenterY + scaledY),
-                                    (int)scaledTileSize,
-                                    (int)scaledTileSize
-                                );
-
-                                EWallTypes wallType = World.walls[tilePos];
-
-                                if (wallType == EWallTypes.Air)
-                                {
-                                    continue;
-                                }
-
-                                int lightLevel = World.GetLightLevel(tilePos);
-
-                                float lightIntensity = lightLevel / 16f;
-                                Wall wallData = WallID.GetWall(wallType);
-                                Color lightColor = wallData.tint * lightIntensity;
-                                lightColor.A = 0xff;
-
-                                if (!World.wallFrames.ContainsKey(tilePos))
-                                {
-                                    Rectangle frame = World.GetWallFrame((int)tilePos.X, (int)tilePos.Y, wallData);
-                                    World.wallFrames[tilePos] = frame;
-                                }
-
-                                _spriteBatch.Draw(wallData.sprite, drawRect, World.wallFrames[tilePos], lightColor);
-                            }
-                        }
+                        RenderWall(x, y, tilePos);
+                        RenderTile(x, y, tilePos);
+                        
+                        
                     }
                 }
             }
@@ -283,9 +195,108 @@ namespace EngineZ
             base.Draw(gameTime);
         }
 
-        private void LightTile()
+        private void RenderTile(int x, int y, Vector2 tilePos)
         {
 
+            if(!World.tiles.ContainsKey(tilePos))
+            {
+                return;
+            }
+            float screenCenterX = Window.ClientBounds.Width / 2f;
+            float screenCenterY = Window.ClientBounds.Height / 2f;
+            float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
+
+            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
+            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
+
+            float scaledX = relativeX * HUD.DPIScale;
+            float scaledY = relativeY * HUD.DPIScale;
+
+            Rectangle drawRect = new Rectangle(
+                (int)(screenCenterX + scaledX),
+                (int)(screenCenterY + scaledY),
+                (int)scaledTileSize,
+                (int)scaledTileSize
+            );
+
+            ETileTypes tileType = World.tiles[tilePos];
+            if (tileType == ETileTypes.Air)
+            {
+                return;
+            }
+            Lighting.UpdateLighting(tilePos);
+            int lightLevel = Lighting.GetLightLevel(tilePos);
+
+
+            float lightIntensity = lightLevel / 16f;
+            Tile tileData = TileID.GetTile(tileType);
+            Color lightColor = tileData.tint * lightIntensity;
+            lightColor.A = 0xff;
+
+            if (!World.tileFrames.ContainsKey(tilePos))
+            {
+                Rectangle frame = World.GetTileFrame((int)tilePos.X, (int)tilePos.Y, tileData);
+                World.tileFrames[tilePos] = frame;
+            }
+
+            _spriteBatch.Draw(tileData.sprite, drawRect, World.tileFrames[tilePos], lightColor);
+        }
+
+        void RenderWall(int x, int y, Vector2 tilePos)
+        {
+            /*
+            if(World.tiles.ContainsKey(tilePos))
+            {
+                if (TileID.GetTile(World.tiles[tilePos]).hideWall)
+                {
+                    return;
+                }
+            }*/
+
+            if(!World.walls.ContainsKey(tilePos))
+            {
+                return;
+            }
+
+            float screenCenterX = Window.ClientBounds.Width / 2f;
+            float screenCenterY = Window.ClientBounds.Height / 2f;
+            float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
+
+            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
+            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
+
+            float scaledX = relativeX * HUD.DPIScale;
+            float scaledY = relativeY * HUD.DPIScale;
+
+            Rectangle drawRect = new Rectangle(
+                (int)(screenCenterX + scaledX),
+                (int)(screenCenterY + scaledY),
+                (int)scaledTileSize,
+                (int)scaledTileSize
+            );
+
+            EWallTypes wallType = World.walls[tilePos];
+
+            if (wallType == EWallTypes.Air)
+            {
+                return;
+            }
+
+            Lighting.UpdateLighting(tilePos);
+            int lightLevel = Lighting.GetLightLevel(tilePos);
+
+            float lightIntensity = lightLevel / 16f;
+            Wall wallData = WallID.GetWall(wallType);
+            Color lightColor = wallData.tint * lightIntensity;
+            lightColor.A = 0xff;
+
+            if (!World.wallFrames.ContainsKey(tilePos))
+            {
+                Rectangle frame = World.GetWallFrame((int)tilePos.X, (int)tilePos.Y, wallData);
+                World.wallFrames[tilePos] = frame;
+            }
+
+            _spriteBatch.Draw(wallData.sprite, drawRect, World.wallFrames[tilePos], lightColor);
         }
     }
 }
