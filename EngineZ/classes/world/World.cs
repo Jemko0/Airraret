@@ -158,7 +158,7 @@ namespace EngineZ.classes.world
             {
                 while (y < size - Math.Abs(x))
                 {
-                    if(x != 3)
+                    if(x != 0)
                     {
                         tiles[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = ETileTypes.Air;
                     }

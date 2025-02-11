@@ -46,7 +46,7 @@ namespace EngineZ.UI
         public override void Draw(ref SpriteBatch spriteBatch)
         {
             delta.text = "Delta ms: " + Main.GetGame().InactiveSleepTime.TotalMilliseconds.ToString();
-            fps.text = "FPS: -1";
+            fps.text = "FPS: " + Main.GetGame().fpsCounter.fps;
             targetElapsed.text = "Target Elapsed ms: " + Main.GetGame().TargetElapsedTime.TotalMilliseconds.ToString();
             maxElapsed.text = "Max Elapsed ms: " + Main.GetGame().MaxElapsedTime.TotalMilliseconds.ToString();
             origin = new Vector2(0, 200);

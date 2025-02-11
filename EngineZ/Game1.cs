@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Threading;
 
 
 namespace EngineZ
@@ -28,6 +29,7 @@ namespace EngineZ
         public static bool renderWorld;
         public MusicManager musicManager;
         public Texture2D blackTx;
+        public FPSCounter fpsCounter;
         public Airraret()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -42,10 +44,18 @@ namespace EngineZ
             Window.AllowUserResizing = true;
             Window.Title = "Airarret";
 
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.ApplyChanges();
+
             blackTx = new Texture2D(_graphics.GraphicsDevice, 1, 1);
             blackTx.SetData(new Color[] { Color.Black });
 
             clientCamera = new Camera();
+
+            fpsCounter = new FPSCounter(this);
+            Components.Add(fpsCounter);
+
             base.Initialize();
         }
 
@@ -123,7 +133,8 @@ namespace EngineZ
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Up))
+            //Thread.Sleep(10);
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 Camera.cameraPosition.Y -= 64;
             }
@@ -153,19 +164,40 @@ namespace EngineZ
 
             if(renderWorld)
             {
-                int startX = (int)(Camera.cameraPosition.X / World.TILESIZE);
-                int startY = (int)(Camera.cameraPosition.Y / World.TILESIZE);
-                int endX = startX + Window.ClientBounds.Width / World.TILESIZE;
-                int endY = startY + Window.ClientBounds.Height / World.TILESIZE;
+                int startX = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.X) + 32;
+                int startY = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.Y) + 32;
+                int endX = startX + World.TILESIZE * (int)(116);
+                int endY = startY + World.TILESIZE * (int)(64);
 
-                for (int x = startX; x < endX; x++)
+                for (int x = startX; x < endX; x += World.TILESIZE)
                 {
-                    for (int y = startY; y < endY; y++)
+                    for (int y = startY; y < endY; y += World.TILESIZE)
                     {
-                        Vector2 tilePos = new Vector2(x * World.TILESIZE, y * World.TILESIZE);
+                        Vector2 tilePos = new Vector2(x, y);
+                        int centerX = Window.ClientBounds.Width / 2;
+                        int centerY = Window.ClientBounds.Height / 2;
 
-                        RenderWall(x, y, tilePos);
-                        RenderTile(x, y, tilePos);
+                        int screenX = (int)(x - Camera.cameraPosition.X) - centerX;
+                        int screenY = (int)(y - Camera.cameraPosition.Y) - centerY;
+                        int screenSize = World.TILESIZE;
+                        
+
+                        screenX = (int)(screenX * HUD.DPIScale);
+                        screenY = (int)(screenY * HUD.DPIScale);
+                        screenSize = (int)(screenSize * HUD.DPIScale);
+
+                        screenX += centerX;
+                        screenY += centerY;
+
+                        Rectangle drawRect = new Rectangle(
+                            (int)screenX,
+                            (int)screenY,
+                            (int)screenSize,
+                            (int)screenSize
+                        );
+
+                        RenderWall(tilePos, drawRect);
+                        RenderTile(tilePos, drawRect);
                         
                         
                     }
@@ -195,29 +227,13 @@ namespace EngineZ
             base.Draw(gameTime);
         }
 
-        private void RenderTile(int x, int y, Vector2 tilePos)
+        private void RenderTile(Vector2 tilePos, Rectangle drawRect)
         {
 
             if(!World.tiles.ContainsKey(tilePos))
             {
                 return;
             }
-            float screenCenterX = Window.ClientBounds.Width / 2f;
-            float screenCenterY = Window.ClientBounds.Height / 2f;
-            float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
-
-            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
-            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
-
-            float scaledX = relativeX * HUD.DPIScale;
-            float scaledY = relativeY * HUD.DPIScale;
-
-            Rectangle drawRect = new Rectangle(
-                (int)(screenCenterX + scaledX),
-                (int)(screenCenterY + scaledY),
-                (int)scaledTileSize,
-                (int)scaledTileSize
-            );
 
             ETileTypes tileType = World.tiles[tilePos];
             if (tileType == ETileTypes.Air)
@@ -242,7 +258,7 @@ namespace EngineZ
             _spriteBatch.Draw(tileData.sprite, drawRect, World.tileFrames[tilePos], lightColor);
         }
 
-        void RenderWall(int x, int y, Vector2 tilePos)
+        void RenderWall(Vector2 tilePos, Rectangle drawRect)
         {
             /*
             if(World.tiles.ContainsKey(tilePos))
@@ -258,22 +274,7 @@ namespace EngineZ
                 return;
             }
 
-            float screenCenterX = Window.ClientBounds.Width / 2f;
-            float screenCenterY = Window.ClientBounds.Height / 2f;
-            float scaledTileSize = (float)Math.Ceiling(World.TILESIZE * HUD.DPIScale);
-
-            float relativeX = x * World.TILESIZE - Camera.cameraPosition.X - screenCenterX;
-            float relativeY = y * World.TILESIZE - Camera.cameraPosition.Y - screenCenterY;
-
-            float scaledX = relativeX * HUD.DPIScale;
-            float scaledY = relativeY * HUD.DPIScale;
-
-            Rectangle drawRect = new Rectangle(
-                (int)(screenCenterX + scaledX),
-                (int)(screenCenterY + scaledY),
-                (int)scaledTileSize,
-                (int)scaledTileSize
-            );
+            
 
             EWallTypes wallType = World.walls[tilePos];
 
