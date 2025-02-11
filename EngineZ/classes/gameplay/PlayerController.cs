@@ -34,7 +34,7 @@ namespace EngineZ.classes.gameplay
             {
                 if (cameraAttachToEntity)
                 {
-                    Camera.cameraPosition = new Vector2(controlledEntity.rect.Location.X - Main.GetGame().Window.ClientBounds.Width / 2, controlledEntity.rect.Location.Y - Main.GetGame().Window.ClientBounds.Height / 2);
+                    Camera.cameraPosition = new Vector2(controlledEntity.rect.Location.X, controlledEntity.rect.Location.Y);
                 }
 
                 int inputLR = 0;

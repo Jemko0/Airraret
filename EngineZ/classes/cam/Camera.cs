@@ -1,5 +1,6 @@
 ﻿using EngineZ.classes.world;
 using EngineZ.UI;
+using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -72,38 +73,24 @@ namespace EngineZ.classes.cam
             return viewBounds.Contains(rect);
         }
 
-        public static Vector2 ScreenToWorld(float screenX, float screenY)
-        {
-            // Get screen center coordinates
-            float screenCenterX = Main.GetGame().Window.ClientBounds.Width / 2f;
-            float screenCenterY = Main.GetGame().Window.ClientBounds.Height / 2f;
-
-            // Calculate position relative to screen center
-            float relativeX = screenX - screenCenterX;
-            float relativeY = screenY - screenCenterY;
-
-            // Scale the coordinates based on DPI (divide by scale since we're converting from screen to world)
-            float scale = HUD.DPIScale;
-            relativeX /= scale;
-            relativeY /= scale;
-
-            float worldX = relativeX + Camera.cameraPosition.X + screenCenterX;
-            float worldY = relativeY + Camera.cameraPosition.Y + screenCenterY;
-
-            return new Vector2(worldX, worldY);
-        }
-
-        public static Vector2 WorldToTile(float worldX, float worldY)
-        {
-            int tileX = (int)Math.Floor(worldX / World.TILESIZE) * World.TILESIZE;
-            int tileY = (int)Math.Floor(worldY / World.TILESIZE) * World.TILESIZE;
-            return new Vector2(tileX, tileY);
-        }
-
         public static Vector2 ScreenToTile(float screenX, float screenY)
         {
-            Vector2 worldPos = ScreenToWorld(screenX, screenY);
-            return WorldToTile(worldPos.X, worldPos.Y);
+            float centerX = Main.GetGame().Window.ClientBounds.Width / 2f;
+            float centerY = Main.GetGame().Window.ClientBounds.Height / 2f;
+            
+            float relativeX = screenX - centerX;
+            float relativeY = screenY - centerY;
+            
+            relativeX /= HUD.DPIScale;
+            relativeY /= HUD.DPIScale;
+            
+            float worldX = relativeX + cameraPosition.X;
+            float worldY = relativeY + cameraPosition.Y;
+            
+            float snappedX = MathUtil.FloatToTileSnap(worldX);
+            float snappedY = MathUtil.FloatToTileSnap(worldY);
+            
+            return new Vector2(snappedX, snappedY);
         }
     }
 }

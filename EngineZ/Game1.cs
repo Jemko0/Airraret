@@ -164,42 +164,46 @@ namespace EngineZ
 
             if(renderWorld)
             {
-                int startX = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.X) + 32;
-                int startY = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.Y) + 32;
-                int endX = startX + World.TILESIZE * (int)(116);
-                int endY = startY + World.TILESIZE * (int)(64);
+
+                const int TILE_PAD = 24; //Render TILE_PAD amount more tiles outside of screen (for lighting)
+
+                const int TILES_X = 118 + TILE_PAD;
+                const int TILES_Y = 66  + TILE_PAD;
+
+                int centerX = Window.ClientBounds.Width / 2;
+                int centerY = Window.ClientBounds.Height / 2;
+                
+                int startX = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.X - (TILES_X * World.TILESIZE / 2));
+                int startY = (int)MathUtil.FloatToTileSnap(Camera.cameraPosition.Y - (TILES_Y * World.TILESIZE / 2));
+                int endX = startX + World.TILESIZE * TILES_X;
+                int endY = startY + World.TILESIZE * TILES_Y;
 
                 for (int x = startX; x < endX; x += World.TILESIZE)
                 {
                     for (int y = startY; y < endY; y += World.TILESIZE)
                     {
                         Vector2 tilePos = new Vector2(x, y);
-                        int centerX = Window.ClientBounds.Width / 2;
-                        int centerY = Window.ClientBounds.Height / 2;
-
-                        int screenX = (int)(x - Camera.cameraPosition.X) - centerX;
-                        int screenY = (int)(y - Camera.cameraPosition.Y) - centerY;
-                        int screenSize = World.TILESIZE;
                         
-
+                        int screenX = (int)(x - Camera.cameraPosition.X);
+                        int screenY = (int)(y - Camera.cameraPosition.Y);
+                        
                         screenX = (int)(screenX * HUD.DPIScale);
                         screenY = (int)(screenY * HUD.DPIScale);
-                        screenSize = (int)(screenSize * HUD.DPIScale);
-
+                        int screenSize = (int)(World.TILESIZE * HUD.DPIScale) + 1; //1px extra to prevent gaps
+                        
                         screenX += centerX;
                         screenY += centerY;
 
                         Rectangle drawRect = new Rectangle(
-                            (int)screenX,
-                            (int)screenY,
-                            (int)screenSize,
-                            (int)screenSize
+                            screenX,
+                            screenY,
+                            screenSize,
+                            screenSize
                         );
 
+                        Lighting.UpdateLighting(tilePos);
                         RenderWall(tilePos, drawRect);
                         RenderTile(tilePos, drawRect);
-                        
-                        
                     }
                 }
             }
@@ -210,14 +214,31 @@ namespace EngineZ
                 if (entities[i] == null)
                     continue;
 
-                Rectangle renderRect = new Rectangle();
-                renderRect = entities[i].GetRect();
-                Vector2 newPos = Camera.GetTransformed(new Vector2(renderRect.X, renderRect.Y));
-                renderRect.X = (int)newPos.X;
-                renderRect.Y = (int)newPos.Y;
+                Rectangle entityRect = entities[i].GetRect();
+                
+                int screenX = (int)(entityRect.X - Camera.cameraPosition.X);
+                int screenY = (int)(entityRect.Y - Camera.cameraPosition.Y);
+                
+                screenX = (int)(screenX * HUD.DPIScale);
+                screenY = (int)(screenY * HUD.DPIScale);
+                int screenWidth = (int)(entityRect.Width * HUD.DPIScale);
+                int screenHeight = (int)(entityRect.Height * HUD.DPIScale);
+                
+                screenX += Window.ClientBounds.Width / 2;
+                screenY += Window.ClientBounds.Height / 2;
 
-                renderRect = Camera.ScaleRectToDPI(renderRect);
-                _spriteBatch.Draw(entities[i].type.sprite, renderRect, entities[i].type.tint);
+                Rectangle drawRect = new Rectangle(
+                    screenX,
+                    screenY,
+                    screenWidth,
+                    screenHeight
+                );
+
+                int lightLevel = Lighting.GetLightLevel(new Vector2(MathUtil.FloatToTileSnap(screenX), MathUtil.FloatToTileSnap(screenY)));
+
+                Color finalColor = entities[i].type.tint * (lightLevel / Lighting.MAX_LIGHT);
+
+                _spriteBatch.Draw(entities[i].type.sprite, drawRect, finalColor);
             }
 
             _spriteBatch.End();
@@ -227,7 +248,7 @@ namespace EngineZ
             base.Draw(gameTime);
         }
 
-        private void RenderTile(Vector2 tilePos, Rectangle drawRect)
+        void RenderTile(Vector2 tilePos, Rectangle drawRect)
         {
 
             if(!World.tiles.ContainsKey(tilePos))
@@ -240,11 +261,10 @@ namespace EngineZ
             {
                 return;
             }
-            Lighting.UpdateLighting(tilePos);
             int lightLevel = Lighting.GetLightLevel(tilePos);
 
 
-            float lightIntensity = lightLevel / 16f;
+            float lightIntensity = (float)(lightLevel / (float)Lighting.MAX_LIGHT);
             Tile tileData = TileID.GetTile(tileType);
             Color lightColor = tileData.tint * lightIntensity;
             lightColor.A = 0xff;
@@ -283,10 +303,9 @@ namespace EngineZ
                 return;
             }
 
-            Lighting.UpdateLighting(tilePos);
             int lightLevel = Lighting.GetLightLevel(tilePos);
 
-            float lightIntensity = lightLevel / 16f;
+            float lightIntensity = (float)(lightLevel / (float)Lighting.MAX_LIGHT);
             Wall wallData = WallID.GetWall(wallType);
             Color lightColor = wallData.tint * lightIntensity;
             lightColor.A = 0xff;

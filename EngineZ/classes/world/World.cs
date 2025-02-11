@@ -749,10 +749,7 @@ namespace EngineZ.classes.world
         {
             foreach(var tile in World.tiles)
             {
-                if (World.IsTileExposedToAir(tile.Key))
-                {
-                    Lighting.UpdateLighting(tile.Key);
-                }
+                Lighting.UpdateLighting(tile.Key);
 
                 progress?.Report(new WorldGenProgress()
                 {
