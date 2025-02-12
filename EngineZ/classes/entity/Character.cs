@@ -35,7 +35,7 @@ namespace EngineZ.Entities
 
             if(Keyboard.GetState().IsKeyDown(Keys.T))
             {
-                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Dirt);
+                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Dirt, true);
             }
             else
             {

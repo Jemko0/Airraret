@@ -142,15 +142,6 @@ namespace EngineZ.classes.world
                 walls.Add(k, type);
             }
 
-            for (int x = -8; x < 8; x++)
-            {
-                for (int y = -8; y < 8; y++)
-                {
-                    Vector2 remove = new Vector2(xWorld + (x * TILESIZE), (yWorld + (y * TILESIZE)));
-                    lightMap[remove] = 0;
-                }
-            }
-
             //UpdateLighting(k, 0);
             UpdateWallFramesAt((int)k.X, (int)k.Y, ID.WallID.GetWall(type));
         }
