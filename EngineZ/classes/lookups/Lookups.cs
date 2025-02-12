@@ -20,12 +20,12 @@ namespace EngineZ.ID
                     break;
 
                 case EEntityTypes.Default:
-                    e.dimensions = new Vector2(20, 40);
+                    e.dimensions = new Vector2(28, 54);
                     e.sprite = Main.GetGame().Content.Load<Texture2D>("textures/rock");
                     return e;
 
                 case EEntityTypes.Player:
-                    e.dimensions = new Vector2(20, 40);
+                    e.dimensions = new Vector2(28, 54);
                     e.sprite = Main.GetGame().Content.Load<Texture2D>("textures/rock");
                     e.tint = Color.Red;
                     return e;
@@ -71,7 +71,7 @@ namespace EngineZ.ID
                 case ETileTypes.Torch:
                     t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/torch");
                     t.blockLight = 0x00;
-                    t.light = 0x32;
+                    t.light = 0x16;
                     t.hideWall = false;
                     t.frameIgnoreTop = true;
                     t.collide = false;

@@ -167,7 +167,7 @@ namespace EngineZ
             if(renderWorld)
             {
 
-                const int TILE_PAD = 24; //Render TILE_PAD amount more tiles outside of screen (for lighting)
+                const int TILE_PAD = 0; //Render TILE_PAD amount more tiles outside of screen (for lighting)
 
                 const int TILES_X = 118 + TILE_PAD;
                 const int TILES_Y = 66  + TILE_PAD;

@@ -29,7 +29,7 @@ namespace EngineZ.classes.world
         public static Dictionary<Vector2, ETileTypes> tiles = new Dictionary<Vector2, ETileTypes>();
         public static Dictionary<Vector2, EWallTypes> walls = new Dictionary<Vector2, EWallTypes>();
 
-        public const int TILESIZE = 16;
+        public const int TILESIZE = 24;
 
         public static List<WorldGenTask> tasks = new List<WorldGenTask>();
         public static Dictionary<Vector2, int> lightMap = new Dictionary<Vector2, int>();
