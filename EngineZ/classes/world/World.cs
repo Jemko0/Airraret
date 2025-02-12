@@ -1,9 +1,11 @@
 ﻿using EngineZ.DataStructures;
+using EngineZ.ID;
 using EngineZ.RNGenerator;
 using EngineZ.Utility;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -58,11 +60,11 @@ namespace EngineZ.classes.world
                 currentCompletionSource = new TaskCompletionSource<bool>();
                 currentTaskProgress = new Progress<WorldGenProgress>();
                 currentTaskProgress.ProgressChanged += CurrentTaskProgressChanged;
-
+            
                 // Start Task and await both Task and CompletionSource
                 var runTask = task.Run(currentTaskProgress, newParams);
                 await Task.WhenAll(runTask, currentCompletionSource.Task);
-
+            
                 Logger.Log(ELogCategory.LogWorldGen, "WGENTask: " + task.taskName + "completed");
             }
 
@@ -107,7 +109,7 @@ namespace EngineZ.classes.world
             return IsTileExposedToAir((int)pos.X, (int)pos.Y);
         }
 
-        public static void SetTile(int xWorld, int yWorld, ETileTypes type)
+        public static void SetTile(int xWorld, int yWorld, ETileTypes type, bool updateFrames = false)
         {
             Vector2 k = new Vector2(xWorld, yWorld);
             if (tiles.ContainsKey(k))
@@ -120,7 +122,11 @@ namespace EngineZ.classes.world
             }
 
             //UpdateLighting(k, type == ETileTypes.Air ? 16 : 0);
-            UpdateTileFramesAt((int)k.X, (int)k.Y, ID.TileID.GetTile(type));
+            if(updateFrames)
+            {
+                
+                UpdateTileFramesAt((int)k.X, (int)k.Y, ID.TileID.GetTile(type));
+            }
         }
 
         public static void SetWall(int xWorld, int yWorld, EWallTypes type)
@@ -151,6 +157,7 @@ namespace EngineZ.classes.world
 
         public static void CreateHole(int xWorld, int yWorld, int size)
         {
+            size += 1;
             int x = -size;
             int y = 0;
 
@@ -158,27 +165,17 @@ namespace EngineZ.classes.world
             {
                 while (y < size - Math.Abs(x))
                 {
-                    if(x != 0)
+                    if (tiles.ContainsKey(new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)))
                     {
-                        tiles[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = ETileTypes.Air;
+                        SetWall(xWorld + x * TILESIZE, yWorld + y * TILESIZE, EWallTypes.Dirt);
+                        SetWall(xWorld + x * TILESIZE, yWorld - y * TILESIZE, EWallTypes.Dirt);
                     }
-                    
-                    walls[new Vector2(xWorld + x * TILESIZE, yWorld + y * TILESIZE)] = EWallTypes.Dirt;
-                    y++;
-                }
-                x++;
-                y = 0;
-            }
 
-            x = -size;
-            y = 0;
-
-            while (x < size)
-            {
-                while (y < size - Math.Abs(x))
-                {
-                    tiles[new Vector2(xWorld + x * TILESIZE, yWorld - y * TILESIZE)] = ETileTypes.Air;
-                    walls[new Vector2(xWorld + x * TILESIZE, yWorld - y * TILESIZE)] = EWallTypes.Dirt;
+                    if (!(x == size - 1 - y || x == -size + 1 + y))
+                    {
+                        SetTile(xWorld + x * TILESIZE, yWorld + y * TILESIZE, ETileTypes.Air);
+                        SetTile(xWorld + x * TILESIZE, yWorld - y * TILESIZE, ETileTypes.Air);
+                    }
                     y++;
                 }
                 x++;
@@ -186,15 +183,35 @@ namespace EngineZ.classes.world
             }
         }
 
+        public static void DigTunnel(int xWorld, int yWorld, int size, int steps, int dirX, int dirY)
+        {
+            for (int step = 0; step < steps; step++)
+            {
+                int posX = xWorld + (step * dirX);
+                int posY = yWorld + (step * dirY);
+
+
+                posX = (int)MathUtil.FloatToTileSnap(posX);
+                posY = (int)MathUtil.FloatToTileSnap(posY);
+
+                CreateHole(posX, posY, size);
+            }
+        }
+
         #region Frames
         public static Rectangle GetTileFrame(int xWorld, int yWorld, Tile tileData)
         {
+            if(tileData.hangsOnWalls)
+            {
+                return GetHangingTileFrame(xWorld, yWorld, tileData);
+            }
+
             Rectangle tileFrame = new Rectangle(0, 0, tileData.frameSize, tileData.frameSize);
 
-            bool r = IsValidTile(xWorld + World.TILESIZE, yWorld); //RIGHT
-            bool l = IsValidTile(xWorld - World.TILESIZE, yWorld); //LEFT
-            bool t = IsValidTile(xWorld, yWorld - World.TILESIZE) && !tileData.frameIgnoreTop; //TOP
-            bool b = IsValidTile(xWorld, yWorld + World.TILESIZE); //BOTTOM
+            bool r = IsValidForTileFrame(xWorld + World.TILESIZE, yWorld); //RIGHT
+            bool l = IsValidForTileFrame(xWorld - World.TILESIZE, yWorld); //LEFT
+            bool t = IsValidForTileFrame(xWorld, yWorld - World.TILESIZE); //TOP
+            bool b = IsValidForTileFrame(xWorld, yWorld + World.TILESIZE); //BOTTOM
 
             int frameSlot = tileData.frameSize + tileData.framePadding;
 
@@ -298,6 +315,39 @@ namespace EngineZ.classes.world
             {
                 tileFrame.X = frameSlot * 5;
                 tileFrame.Y = frameSlot * 1;
+            }
+
+            return tileFrame;
+        }
+
+
+        public static Rectangle GetHangingTileFrame(int xWorld, int yWorld, Tile tileData)
+        {
+            Rectangle tileFrame = new Rectangle(0, 0, tileData.frameSize, tileData.frameSize);
+
+            bool r = IsValidForTileFrame(xWorld + World.TILESIZE, yWorld); //RIGHT
+            bool l = IsValidForTileFrame(xWorld - World.TILESIZE, yWorld); //LEFT
+            bool b = IsValidForTileFrame(xWorld, yWorld + World.TILESIZE); //BOTTOM
+
+            int frameSlot = tileData.frameSize + tileData.framePadding;
+
+            if (r)
+            {
+                tileFrame.X = frameSlot * 2;
+                tileFrame.Y = frameSlot * 0;
+                return tileFrame;
+            }
+            if (l)
+            {
+                tileFrame.X = frameSlot * 1;
+                tileFrame.Y = frameSlot * 0;
+                return tileFrame;
+            }
+            if (b)
+            {
+                tileFrame.X = frameSlot * 0;
+                tileFrame.Y = frameSlot * 0;
+                return tileFrame;
             }
 
             return tileFrame;
@@ -430,10 +480,28 @@ namespace EngineZ.classes.world
                 new IntVector2(xWorld, yWorld - TILESIZE),
             };
 
-            Rectangle frameR = GetTileFrame(neighborLocations[0].X, neighborLocations[0].Y, tileData);
-            Rectangle frameL = GetTileFrame(neighborLocations[1].X, neighborLocations[1].Y, tileData);
-            Rectangle frameT = GetTileFrame(neighborLocations[2].X, neighborLocations[2].Y, tileData);
-            Rectangle frameB = GetTileFrame(neighborLocations[3].X, neighborLocations[3].Y, tileData);
+            tileFrames[new Vector2(xWorld, yWorld)] = GetTileFrame(xWorld, yWorld, tileData);
+
+            Tile[] tileDatas = new Tile[4];
+            
+            for (int i = 0; i < tileDatas.Length; i++)
+            {
+                Vector2 pos = new Vector2(neighborLocations[i].X, neighborLocations[i].Y);
+                if (tiles.ContainsKey(pos))
+                {
+                    tileDatas[i] = TileID.GetTile(tiles[pos]);
+                }
+                else
+                {
+                    tileDatas[i] = TileID.GetTile(ETileTypes.Air);
+                }
+            }
+                
+
+            Rectangle frameR = GetTileFrame(neighborLocations[0].X, neighborLocations[0].Y, tileDatas[0]);
+            Rectangle frameL = GetTileFrame(neighborLocations[1].X, neighborLocations[1].Y, tileDatas[1]);
+            Rectangle frameT = GetTileFrame(neighborLocations[2].X, neighborLocations[2].Y, tileDatas[2]);
+            Rectangle frameB = GetTileFrame(neighborLocations[3].X, neighborLocations[3].Y, tileDatas[3]);
 
             tileFrames[new Vector2(neighborLocations[0].X, neighborLocations[0].Y)] = frameR;
             tileFrames[new Vector2(neighborLocations[1].X, neighborLocations[1].Y)] = frameL;
@@ -468,6 +536,15 @@ namespace EngineZ.classes.world
             if(tiles.ContainsKey(new Vector2(xWorld, yWorld)))
             {
                 return tiles[new Vector2(xWorld, yWorld)] != ETileTypes.Air;
+            }
+            return false;
+        }
+
+        public static bool IsValidForTileFrame(int xWorld, int yWorld)
+        {
+            if (IsValidTile(xWorld, yWorld))
+            {
+                return TileID.GetTile(tiles[new Vector2(xWorld, yWorld)]).affectTileFrames;   
             }
             return false;
         }
@@ -590,7 +667,6 @@ namespace EngineZ.classes.world
         {
             int surfaceLevel = wparams.maxTilesY / 3;
             FastNoiseLite noise = new FastNoiseLite();
-            int caveSeed = (int)(wparams.seed + (5415.0325 / 23 * 1.42) + (wparams.seed - 523));
 
             for (int x = 0; x < wparams.maxTilesX; x++)
             {
@@ -604,7 +680,7 @@ namespace EngineZ.classes.world
                 {
                     tileType = PickType(x, y, wparams);
                     World.tiles.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), tileType);
-                    
+                    World.walls.Add(new Vector2(x * World.TILESIZE, -y * World.TILESIZE), EWallTypes.Dirt);
                 }
 
                 progress?.Report(new WorldGenProgress()
@@ -683,7 +759,10 @@ namespace EngineZ.classes.world
         {
             int caveAmount = wparams.maxTilesX + wparams.maxTilesY / 5;
 
-            for(int i = 0; i < caveAmount; i++)
+            const int tunnelMaxStep = 12;
+            const int caveMaxSize = 9;
+
+            for (int i = 0; i < caveAmount; i++)
             {
                 int seedOffset = (int)(RNG.GetPseudoRandomFloat(16 - wparams.seed + i * 32.01f) * ushort.MaxValue);
                 float xPercentage = RNG.GetPseudoRandomFloat(wparams.seed + seedOffset + i);
@@ -698,18 +777,24 @@ namespace EngineZ.classes.world
                 caveX *= World.TILESIZE;
                 caveY *= World.TILESIZE;
 
-                int caveSize = (int)(RNG.GetPseudoRandomFloat(wparams.seed - i * 11.04f) * 9.01f);
+                int caveSize = (int)(RNG.GetPseudoRandomFloat(wparams.seed - i * 11.04f) * caveMaxSize);
+                int tunnelSteps = (int)(RNG.GetPseudoRandomFloat(wparams.seed + i * 3.034f) * tunnelMaxStep);
 
-                Logger.Log("afasf", caveX, caveY);
+                int dirX = (int)((RNG.GetPseudoRandomFloat(wparams.seed - i * 13.42314f) - 0.5f) * 256);
+                int dirY = (int)((RNG.GetPseudoRandomFloat(wparams.seed + i * 9.8671f)     - 0.5f) * 256);
+
+                Logger.Log("direction ", dirX, dirY);
+
+                World.DigTunnel(caveX, -caveY, caveSize, tunnelSteps, dirX, dirY);
+
+                
 
                 progress?.Report(new WorldGenProgress()
                 {
-                    CurrentTask = "Caves...",
-                    PercentComplete = i / wparams.maxTilesX,
+                    CurrentTask = "Carving Holes...",
+                    PercentComplete = (float)i / caveAmount,
                 });
 
-
-                World.CreateHole(caveX, -caveY, caveSize);
             }
 
             World.CompleteCurrent();

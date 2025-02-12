@@ -40,11 +40,12 @@ namespace EngineZ.DataStructures
         public bool valid;
         public bool collide;
         public Texture2D sprite;
-        public bool useTileFrame;
+        public bool affectTileFrames;
         public bool hideWall;
         public int frameSize;
         public bool frameIgnoreTop;
         public int framePadding;
+        public bool hangsOnWalls;
         public Color tint;
 
         /// <summary>

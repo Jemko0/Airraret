@@ -15,9 +15,9 @@ namespace EngineZ
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
 
-        public static float FloatToTileSnap(float f)
+        public static float FloatToTileSnap(float fWorld)
         {
-            return (float)(int)Math.Round(f / World.TILESIZE) * World.TILESIZE;
+            return (float)Math.Floor(fWorld / World.TILESIZE) * World.TILESIZE;
         }
     }
 }

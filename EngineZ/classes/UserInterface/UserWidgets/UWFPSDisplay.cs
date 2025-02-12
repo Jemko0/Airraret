@@ -1,4 +1,5 @@
-﻿using EngineZ.DataStructures;
+﻿using EngineZ.classes.world;
+using EngineZ.DataStructures;
 using EngineZ.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,8 @@ namespace EngineZ.UI
         WTextBlock fps;
         WTextBlock targetElapsed;
         WTextBlock maxElapsed;
+        WButton fullbrightButton;
+        WTextBlock fullbrightButtonText;
         public UWFPSDisplay(HUD ownerHUD, Rectangle renderTransform, EWidgetAlignment widgetAlignment) : base(ownerHUD, renderTransform, widgetAlignment)
         {
         }
@@ -32,17 +35,29 @@ namespace EngineZ.UI
             fps = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 64), "fps", ETextJustification.Center);
             targetElapsed = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 64), "target", ETextJustification.Center);
             maxElapsed = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 64), "max", ETextJustification.Center);
-
+            fullbrightButton = HUD.CreateWidget<WButton>(ownerHUD, new Rectangle(0, 0, 0, 64));
+            fullbrightButtonText = HUD.CreateWidget<WTextBlock>(ownerHUD, new Rectangle(0, 0, 0, 64), "Toggle Fullbright", ETextJustification.Center);
+            fullbrightButton.buttonPressed += ToggleFullbright;
             vert = HUD.CreateWidget<WVerticalBox>(ownerHUD, new Rectangle(0, 0, verticalBoxWidth, 200));
             vert.AddChild(delta);
             vert.AddChild(fps);
             vert.AddChild(targetElapsed);
             vert.AddChild(maxElapsed);
 
+            vert.AddChild(fullbrightButton);
+            fullbrightButton.AddChild(fullbrightButtonText);
+
+
             AddChild(vert);
 
             base.Construct();
         }
+
+        private void ToggleFullbright(ButtonInteractionEventArgs args)
+        {
+            Lighting.FULLBRIGHT = !Lighting.FULLBRIGHT;
+        }
+
         public override void Draw(ref SpriteBatch spriteBatch)
         {
             delta.text = "Delta ms: " + Main.GetGame().InactiveSleepTime.TotalMilliseconds.ToString();

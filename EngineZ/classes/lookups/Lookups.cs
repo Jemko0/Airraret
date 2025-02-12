@@ -49,9 +49,10 @@ namespace EngineZ.ID
             t.tint = Color.White;
             t.light = 0x00;
             t.blockLight = 0x03;
-            t.useTileFrame = true;
+            t.affectTileFrames = true;
             t.hideWall = true;
             t.frameIgnoreTop = false;
+            t.hangsOnWalls = false;
 
             switch (type)
             {
@@ -69,10 +70,13 @@ namespace EngineZ.ID
 
                 case ETileTypes.Torch:
                     t.sprite = Main.GetGame().Content.Load<Texture2D>("textures/tile/torch");
-                    t.blockLight = 0;
-                    t.light = 16;
+                    t.blockLight = 0x00;
+                    t.light = 0x32;
                     t.hideWall = false;
                     t.frameIgnoreTop = true;
+                    t.collide = false;
+                    t.hangsOnWalls = true;
+                    t.affectTileFrames = false;
                     break;
             }
 

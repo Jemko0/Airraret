@@ -11,13 +11,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Threading;
+using static System.Drawing.RectangleF;
 
 
 namespace EngineZ
 {
+
     public class Airraret : Game
     {
+
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
         public static Entity[] entities = new Entity[255];
@@ -202,6 +204,7 @@ namespace EngineZ
                         );
 
                         Lighting.UpdateLighting(tilePos);
+
                         RenderWall(tilePos, drawRect);
                         RenderTile(tilePos, drawRect);
                     }
@@ -214,7 +217,8 @@ namespace EngineZ
                 if (entities[i] == null)
                     continue;
 
-                Rectangle entityRect = entities[i].GetRect();
+                System.Drawing.RectangleF rectF = entities[i].GetRect();
+                Rectangle entityRect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
                 
                 int screenX = (int)(entityRect.X - Camera.cameraPosition.X);
                 int screenY = (int)(entityRect.Y - Camera.cameraPosition.Y);
@@ -234,9 +238,10 @@ namespace EngineZ
                     screenHeight
                 );
 
-                int lightLevel = Lighting.GetLightLevel(new Vector2(MathUtil.FloatToTileSnap(screenX), MathUtil.FloatToTileSnap(screenY)));
+                int lightLevel = Lighting.GetLightLevel(new Vector2(MathUtil.FloatToTileSnap(entityRect.X), MathUtil.FloatToTileSnap(entityRect.Y)));
 
-                Color finalColor = entities[i].type.tint * (lightLevel / Lighting.MAX_LIGHT);
+                Color finalColor = entities[i].type.tint * ((float)lightLevel / Lighting.MAX_LIGHT);
+                finalColor.A = 0xff;
 
                 _spriteBatch.Draw(entities[i].type.sprite, drawRect, finalColor);
             }
@@ -294,6 +299,10 @@ namespace EngineZ
                 return;
             }
 
+            if (Lighting.GetLightLevel(tilePos) == Lighting.MIN_LIGHT && World.IsValidTile(tilePos))
+            {
+                return;
+            }
             
 
             EWallTypes wallType = World.walls[tilePos];
@@ -315,7 +324,6 @@ namespace EngineZ
                 Rectangle frame = World.GetWallFrame((int)tilePos.X, (int)tilePos.Y, wallData);
                 World.wallFrames[tilePos] = frame;
             }
-
             _spriteBatch.Draw(wallData.sprite, drawRect, World.wallFrames[tilePos], lightColor);
         }
     }

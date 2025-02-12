@@ -15,9 +15,9 @@ namespace EngineZ.Entities
 {
     public class Character : Entity
     {
-        public float acceleration = 24.0f;
-        public float maxWalkSpeed = 350.0f;
-        public float jumpPower = 800.0f;
+        public float acceleration = 4.0f;
+        public float maxWalkSpeed = 250.0f;
+        public float jumpPower = 500.0f;
         public float groundFriction = 6.0f;
         public float airControl = 0.5f;
         public float airDecel = 4f;
@@ -43,15 +43,22 @@ namespace EngineZ.Entities
                 {
                     World.SetWall((int)tilePos.X, (int)tilePos.Y, EWallTypes.Dirt);
                 }
+                else
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.H))
+                    {
+                        World.CreateHole((int)tilePos.X, (int)tilePos.Y, 12);
+                    }
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.L))
             {
-                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Torch);
+                World.SetTile((int)tilePos.X, (int)tilePos.Y, ETileTypes.Torch, true);
             }
         }
 
-        private void MoveWithCollision(ref int moveX, ref int moveY)
+        private void MoveWithCollision(ref float moveX, ref float moveY)
         {
             // Handle X movement first
             if (moveX != 0)
@@ -81,7 +88,7 @@ namespace EngineZ.Entities
 
                 if (collision)
                 {
-                    moveX = (int)(direction * (Math.Max(0, shortestHit - skinWidth)));
+                    moveX = direction * (Math.Max(0, shortestHit - skinWidth));
                     velocity.X = 0;
                 }
             }
@@ -282,7 +289,6 @@ namespace EngineZ.Entities
         {
             if (!IsOnGround())
             {
-                inputLR *= airControl;
                 velocity.X /= 1 + airDecel * Main.delta;
             }
 
@@ -295,17 +301,16 @@ namespace EngineZ.Entities
             velocity.Y += 9.81f * (float)Main.GetGame().TargetElapsedTime.TotalSeconds; // Gravity
 
             // Convert velocity to movement amounts
-            int moveX = (int)velocity.X;
-            int moveY = (int)velocity.Y;
+            float moveX = velocity.X;
+            float moveY = velocity.Y;
             MoveWithCollision(ref moveX, ref moveY);
 
             if (Math.Abs(velocity.X) > 0 && IsOnGround() && lastInputLR == 0)
             {
                 velocity.X /= 1 + groundFriction * Main.delta;
-                if (Math.Abs(velocity.X) < 0.01f)
+                if (Math.Abs(velocity.X) < float.Epsilon)
                     velocity.X = 0;
             }
-
         }
 
         public override void AxisInput(float axisVal)

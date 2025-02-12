@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using EngineZ.DataStructures;
 using EngineZ.ID;
 using EngineZ.classes.interfaces;
+using System.Drawing;
 
 namespace EngineZ.Entities
 {
     public class Entity : GameComponent, IPlayerControllerInput
     {
         public EntityDef type;
-        public Rectangle rect;
+        public RectangleF rect;
         public Vector2 velocity = new Vector2(0, 0);
         public Entity(Game game, EEntityTypes initType) : base(game)
         {
@@ -32,7 +33,7 @@ namespace EngineZ.Entities
         /// gets the entities rect collider within the world
         /// </summary>
         /// <returns></returns>
-        public Rectangle GetRect()
+        public RectangleF GetRect()
         {
             return rect;
         }
@@ -47,12 +48,12 @@ namespace EngineZ.Entities
 
         public void SetLocation(Vector2 position)
         {
-            rect.Location = new Point((int)position.X, (int)position.Y);
+            rect.Location = new PointF((int)position.X, (int)position.Y);
         }
 
         public void SetLocation(float x, float y)
         {
-            rect.Location = new Point((int)x, (int)y);
+            rect.Location = new PointF((int)x, (int)y);
         }
 
         public override void Update(GameTime gameTime)

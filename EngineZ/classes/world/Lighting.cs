@@ -14,8 +14,15 @@ namespace EngineZ.classes.world
         public const int MAX_LIGHT = 16;
         public static int OutdoorLight = 16;
         public const int MIN_LIGHT = 0;
+        public static bool FULLBRIGHT = false;
         public static void UpdateLighting(Vector2 position)
         {
+            if(FULLBRIGHT)
+            {
+                World.lightMap[position] = MAX_LIGHT;
+                return;
+            }
+
             if (!World.IsTileOrWall(position))
             {
                 World.lightMap[position] = OutdoorLight;
